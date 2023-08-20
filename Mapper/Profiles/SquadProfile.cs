@@ -12,5 +12,11 @@ public class SquadProfile : Profile
         CreateMap<CreateSquadDto, Squad>().ReverseMap();
         CreateMap<UpdateSquadDto, Squad>().ReverseMap();
         CreateMap<Squad, ReadSquadDto>();
+        CreateMap<UpdateSquadDto, CreateSquadDto>();
+
+        CreateMap<Squad, ReadSquadDtoWithRelations>()
+            .ForMember(
+                dest => dest.Pokemons,
+                opt => opt.MapFrom(src => src.Pokemons));
     }
 }

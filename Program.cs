@@ -1,6 +1,8 @@
-
 using Microsoft.EntityFrameworkCore;
 using VortiDex.Infra;
+using VortiDex.Infra.Repositories;
+using VortiDex.Mapper.Implementations;
+using VortiDex.Services;
 
 namespace VortiDex;
 
@@ -20,6 +22,18 @@ public class Program
 
         builder
             .Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
+        builder.Services.AddScoped<TrainerServices>();
+        builder.Services.AddScoped<TrainerRepository>();
+        builder.Services.AddScoped<TrainerMapper>();
+
+        builder.Services.AddScoped<SquadServices>();
+        builder.Services.AddScoped<SquadRepository>();
+        builder.Services.AddScoped<SquadMapper>();
+
+        builder.Services.AddScoped<SkillServices>();
+        builder.Services.AddScoped<SkillRepository>();
+        builder.Services.AddScoped<SkillMapper>();
 
         builder.Services.AddControllers();
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

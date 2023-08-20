@@ -15,17 +15,22 @@ public class SkillServices
         _mapper = mapper;
     }
 
-    public void CreateServ(CreateSkillDto createDto)
+    public ReadSkillDtoWithRelations CreateServ(CreateSkillDto createDto)
     {
         var skill = _mapper
             .ToModel(createDto);
 
-        skill = _skillRep
+        _skillRep
             .CreateRep(skill);
 
+
+        var readSkill = _mapper
+            .ToReadDtoWithRelations(skill);
+
+        return (readSkill);
     }
 
-    public void GetById(int skillId)
+    public ReadSkillDtoWithRelations GetById(int skillId)
     {
         var skill = _skillRep
             .FindById(skillId);
@@ -33,6 +38,8 @@ public class SkillServices
 
         var dto = _mapper
             .ToReadDtoWithRelations(skill);
+
+        return (dto);
     }
 
     public ICollection<ReadSkillDtoWithRelations> GetAllServ()
@@ -46,20 +53,27 @@ public class SkillServices
         return dto;
     }
 
-    public void UpdateServ(int skillId, UpdateSkillDto updateDto)
+    public ReadSkillDtoWithRelations UpdateServ(int skillId, UpdateSkillDto updateDto)
     {
-        var skill = _skillRep.FindById(skillId);
+        var skill = _skillRep
+            .FindById(skillId);
 
         if (skill is null)
-        {
-            CreateServ(_mapper.ToCreateDto(updateDto));
-        }
-        else
-        {
-            skill = _mapper.ToExistentModel(updateDto, skill);
-            _skillRep.UpdateRep(skill);
-            _mapper.ToReadDtoWithRelations(skill);
-        }
+            return CreateServ(
+                _mapper
+                    .ToCreateDto(updateDto)
+            );
+
+        skill = _mapper
+            .ToExistentModel(updateDto, skill);
+
+        _skillRep
+            .UpdateRep(skill);
+
+        var skillDto = _mapper
+            .ToReadDtoWithRelations(skill);
+
+        return skillDto;
     }
 
     public void Delete(int skillId)

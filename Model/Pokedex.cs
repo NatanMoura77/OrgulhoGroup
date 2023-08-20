@@ -13,10 +13,10 @@ public class Pokedex
     public required int TrainerId { get; set; }
 
     [JsonIgnore]
-    public required Trainer Trainer { get; set; }
+    public Trainer Trainer { get; set; }
 
     [JsonIgnore]
-    public required ICollection<Pokemon> Pokemons { get; set; }
+    public ICollection<Pokemon> Pokemons { get; set; }
 
     public Pokedex()
     {

@@ -10,9 +10,9 @@ public class PokeType
     public required string Name { get; set; }
 
     [JsonIgnore]
-    public required ICollection<Pokemon> Pokemon { get; set; }
+    public ICollection<Pokemon> Pokemon { get; set; }
 
     [JsonIgnore]
-    public required ICollection<Skill> Skills { get; set; }
+    public ICollection<Skill> Skills { get; set; }
 
 }

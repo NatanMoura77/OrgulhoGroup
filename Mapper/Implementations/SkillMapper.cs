@@ -33,8 +33,8 @@ public class SkillMapper
         ICollection<Skill> skills
     ) => _mapper.Map<ICollection<ReadSkillDto>>(skills);
 
-    public ReadSkillDto ToReadDtoWithRelations(Skill skill) =>
-        _mapper.Map<ReadSkillDto>(skill);
+    public ReadSkillDtoWithRelations ToReadDtoWithRelations(Skill skill) =>
+        _mapper.Map<ReadSkillDtoWithRelations>(skill);
 
     public ICollection<ReadSkillDtoWithRelations> ToReadDtoWithRelationsCollection(
         ICollection<Skill> skills

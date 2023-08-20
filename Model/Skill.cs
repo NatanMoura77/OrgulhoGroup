@@ -17,10 +17,10 @@ public class Skill
 
     [Required]
     [JsonIgnore]
-    public required PokeType Type { get; set; }
+    public PokeType Type { get; set; }
 
     [JsonIgnore]
-    public required ICollection<Pokemon> Pokemons { get; set; }
+    public ICollection<Pokemon> Pokemons { get; set; }
 
     public Skill()
     {

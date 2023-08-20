@@ -14,10 +14,10 @@ public class Trainer
     public required string Name { get; set; }
 
     [JsonIgnore]
-    public required Pokedex Pokedex { get; set; }
+    public Pokedex Pokedex { get; set; }
 
     [JsonIgnore]
-    public required ICollection<Squad> Squads { get; set; }
+    public ICollection<Squad> Squads { get; set; }
 
     public Trainer()
     {

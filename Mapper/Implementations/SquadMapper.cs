@@ -33,8 +33,8 @@ public class SquadMapper
         ICollection<Squad> squads
     ) => _mapper.Map<ICollection<ReadSquadDto>>(squads);
 
-    public ReadSquadDto ToReadDtoWithRelations(Squad squad) =>
-        _mapper.Map<ReadSquadDto>(squad);
+    public ReadSquadDtoWithRelations ToReadDtoWithRelations(Squad squad) =>
+        _mapper.Map<ReadSquadDtoWithRelations>(squad);
 
     public ICollection<ReadSquadDtoWithRelations> ToReadDtoWithRelationsCollection(
         ICollection<Squad> squads

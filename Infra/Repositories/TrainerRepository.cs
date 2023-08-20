@@ -6,7 +6,6 @@ namespace VortiDex.Infra.Repositories;
 public class TrainerRepository
 {
     private readonly PokeContext _context;
-
     public TrainerRepository(PokeContext context)
     {
         _context = context;
@@ -22,8 +21,11 @@ public class TrainerRepository
 
     public Trainer? FindById(int id)
     {
-       return _context.Trainers.FirstOrDefault(trainer => trainer.Id == id);
-        
+       return _context
+            .Trainers
+            .Include(trainer => trainer.Squads)
+            .FirstOrDefault(trainer => trainer.Id == id);
+       
     }
 
     public ICollection<Trainer> GetAllRep()

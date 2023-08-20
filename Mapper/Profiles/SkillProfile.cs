@@ -12,5 +12,11 @@ public class SkillProfile : Profile
         CreateMap<CreateSkillDto, Skill>().ReverseMap();
         CreateMap<UpdateSkillDto, Skill>().ReverseMap();
         CreateMap<Skill, ReadSkillDto>();
+        CreateMap<UpdateSkillDto, CreateSkillDto>();
+
+        CreateMap<Skill, ReadSkillDtoWithRelations>()
+            .ForMember(
+                dest => dest.Type,
+                opt => opt.MapFrom(src => src.Type));
     }
 }

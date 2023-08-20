@@ -22,7 +22,9 @@ public class SkillRepository
 
     public Skill? FindById(int id)
     {
-       return _context.Skills.FirstOrDefault(skill => skill.Id == id);
+       return _context.Skills
+            .Include(skill =>  skill.Type)
+            .FirstOrDefault(skill => skill.Id == id);
     }
 
     public ICollection<Skill> GetAllRep()
@@ -30,7 +32,7 @@ public class SkillRepository
        return _context
             .Skills
             .Include(skill => skill.Pokemons)
-            .ThenInclude(skill => skill.PokeTypes)
+            .ThenInclude(pokemon => pokemon.PokeTypes)
             .ToList();
     }
 

@@ -12,5 +12,11 @@ public class TrainerProfile : Profile
         CreateMap<CreateTrainerDto, Trainer>().ReverseMap();
         CreateMap<UpdateTrainerDto, Trainer>().ReverseMap();
         CreateMap<Trainer, ReadTrainerDto>();
+        CreateMap<UpdateTrainerDto, CreateTrainerDto>();
+
+        CreateMap<Trainer, ReadTrainerDtoWithRelations>()
+            .ForMember(
+                dest => dest.Squads,
+                opt => opt.MapFrom(src => src.Squads)).ReverseMap();
     }
 }

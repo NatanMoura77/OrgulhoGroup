@@ -33,8 +33,8 @@ public class TrainerMapper
         ICollection<Trainer> trainers
     ) => _mapper.Map<ICollection<ReadTrainerDto>>(trainers);
 
-    public ReadTrainerDto ToReadDtoWithRelations(Trainer trainer) =>
-        _mapper.Map<ReadTrainerDto>(trainer);
+    public ReadTrainerDtoWithRelations ToReadDtoWithRelations(Trainer trainer) =>
+        _mapper.Map<ReadTrainerDtoWithRelations>(trainer);
 
     public ICollection<ReadTrainerDtoWithRelations> ToReadDtoWithRelationsCollection(
         ICollection<Trainer> trainers

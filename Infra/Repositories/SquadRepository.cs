@@ -22,7 +22,9 @@ public class SquadRepository
 
     public Squad? FindById(int id)
     {
-        return _context.Squads.FirstOrDefault(squad => squad.Id == id);
+        return _context.Squads
+            .Include(squad => squad.Trainer)
+            .FirstOrDefault(squad => squad.Id == id);
     }
 
     public ICollection<Squad> GetAllRep()

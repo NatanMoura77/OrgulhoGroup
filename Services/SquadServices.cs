@@ -15,17 +15,21 @@ public class SquadServices
         _mapper = mapper;
     }
 
-    public void CreateServ(CreateSquadDto createDto)
+    public ReadSquadDtoWithRelations CreateServ(CreateSquadDto createDto)
     {
         var squad = _mapper
             .ToModel(createDto);
 
-        squad = _squadRep
+        _squadRep
             .CreateRep(squad);
 
+        var readSquad = _mapper
+            .ToReadDtoWithRelations(squad);
+
+        return (readSquad);
     }
 
-    public void GetById(int squadId)
+    public ReadSquadDtoWithRelations GetById(int squadId)
     {
         var squad = _squadRep
             .FindById(squadId);
@@ -33,6 +37,8 @@ public class SquadServices
 
         var dto = _mapper
             .ToReadDtoWithRelations(squad);
+
+        return (dto);
     }
 
     public ICollection<ReadSquadDtoWithRelations> GetAllServ()
@@ -46,20 +52,27 @@ public class SquadServices
         return dto;
     }
 
-    public void UpdateServ(int squadId, UpdateSquadDto updateDto)
+    public ReadSquadDtoWithRelations UpdateServ(int squadId, UpdateSquadDto updateDto)
     {
-        var squad = _squadRep.FindById(squadId);
+        var squad = _squadRep
+            .FindById(squadId);
 
         if (squad is null)
-        {
-            CreateServ(_mapper.ToCreateDto(updateDto));
-        }
-        else
-        {
-            squad = _mapper.ToExistentModel(updateDto, squad);
-            _squadRep.UpdateRep(squad);
-            _mapper.ToReadDtoWithRelations(squad);
-        }
+            return CreateServ(
+                _mapper
+                    .ToCreateDto(updateDto)
+            );
+
+        squad = _mapper
+            .ToExistentModel(updateDto, squad);
+
+        _squadRep
+            .UpdateRep(squad);
+
+        var squadDto = _mapper
+            .ToReadDtoWithRelations(squad);
+
+        return squadDto;
     }
 
     public void Delete(int squadId)

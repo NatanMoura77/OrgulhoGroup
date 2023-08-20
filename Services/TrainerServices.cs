@@ -15,17 +15,21 @@ public class TrainerServices
         _mapper = mapper;
     }
 
-    public void CreateServ(CreateTrainerDto createDto)
+    public ReadTrainerDtoWithRelations CreateServ(CreateTrainerDto createDto)
     {
         var trainer = _mapper
             .ToModel(createDto);
 
-        trainer = _trainerRep
+       _trainerRep
             .CreateRep(trainer);
 
+        var readTrainer = _mapper
+            .ToReadDtoWithRelations(trainer);
+        
+        return readTrainer;
     }
 
-    public void GetById(int trainerId)
+    public ReadTrainerDtoWithRelations GetById(int trainerId)
     {
         var trainer = _trainerRep
             .FindById(trainerId);
@@ -33,6 +37,9 @@ public class TrainerServices
 
         var dto = _mapper
             .ToReadDtoWithRelations(trainer);
+        
+        return (dto);
+
     }
 
     public ICollection<ReadTrainerDtoWithRelations> GetAllServ()
@@ -46,27 +53,34 @@ public class TrainerServices
         return dto;
     }
 
-    public void UpdateServ(int trainerId, UpdateTrainerDto updateDto)
+    public ReadTrainerDtoWithRelations UpdateServ(int trainerId, UpdateTrainerDto updateDto)
     {
-        var trainer = _trainerRep.FindById(trainerId);
+        var trainer = _trainerRep
+            .FindById(trainerId);
 
         if (trainer is null)
-        {
-            CreateServ(_mapper.ToCreateDto(updateDto));
-        }
-        else
-        {
-            trainer = _mapper.ToExistentModel(updateDto, trainer);
-            _trainerRep.UpdateRep(trainer);
-            _mapper.ToReadDtoWithRelations(trainer);
-        }
+            return CreateServ(
+                _mapper
+                    .ToCreateDto(updateDto)
+            );
+
+        trainer = _mapper
+            .ToExistentModel(updateDto, trainer);
+
+        _trainerRep
+            .UpdateRep(trainer);
+
+        var trainerDto = _mapper
+            .ToReadDtoWithRelations(trainer);
+
+        return trainerDto;
     }
 
     public void Delete(int trainerId) 
     {
         var trainer = _trainerRep
            .FindById(trainerId);
-           //?? throw new StudentNotFoundException();
+           //?? throw new TrainerNotFoundException();
 
         _trainerRep
             .DeleteRep(trainer);

@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.Globalization;
 using System.Text.Json.Serialization;
 
 namespace VortiDex.Model;
@@ -30,13 +29,13 @@ public class Pokemon
 
     [Required]
     [JsonIgnore]
-    public required PokeType[] PokeTypes { get; set; } = new PokeType[2];
+    public PokeType[] PokeTypes { get; set; } = new PokeType[2];
 
     [JsonIgnore]
-    public required ICollection<Squad> Squads { get; set; }
+    public ICollection<Squad> Squads { get; set; }
 
     [JsonIgnore]
-    public required ICollection<Skill> Skills { get; set; }
+    public ICollection<Skill> Skills { get; set; }
 
     public Pokemon()
     {
