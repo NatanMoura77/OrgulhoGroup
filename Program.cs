@@ -43,6 +43,10 @@ public class Program
         builder.Services.AddScoped<PokeTypeRepository>();
         builder.Services.AddScoped<PokeTypeMapper>();
 
+        builder.Services.AddScoped<PokedexServices>();
+        builder.Services.AddScoped<PokedexRepository>();
+        builder.Services.AddScoped<PokedexMapper>();
+
         builder.Services.AddControllers();
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
         builder.Services.AddEndpointsApiExplorer();

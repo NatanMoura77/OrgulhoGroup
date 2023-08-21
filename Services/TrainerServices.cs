@@ -1,5 +1,6 @@
 ﻿using VortiDex.Dtos.Request.DtosTrainer;
 using VortiDex.Dtos.Responses.DtosTrainer;
+using VortiDex.Exceptions.NotFoundExceptions;
 using VortiDex.Infra.Repositories;
 using VortiDex.Mapper.Implementations;
 
@@ -32,8 +33,7 @@ public class TrainerServices
     public ReadTrainerDtoWithRelations GetById(int trainerId)
     {
         var trainer = _trainerRep
-            .FindById(trainerId);
-            //?? throw new StudentNotFoundException();
+            .FindById(trainerId) ?? throw new TrainerNotFoundException();
 
         var dto = _mapper
             .ToReadDtoWithRelations(trainer);
@@ -79,8 +79,7 @@ public class TrainerServices
     public void Delete(int trainerId) 
     {
         var trainer = _trainerRep
-           .FindById(trainerId);
-           //?? throw new TrainerNotFoundException();
+           .FindById(trainerId) ?? throw new TrainerNotFoundException();
 
         _trainerRep
             .DeleteRep(trainer);

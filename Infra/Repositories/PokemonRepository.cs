@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using VortiDex.Exceptions.NotFoundExceptions;
 using VortiDex.Model;
 
 namespace VortiDex.Infra.Repositories;
@@ -71,7 +72,7 @@ public class PokemonRepository
 
     public Pokemon LearnMoveRep(Pokemon pokemon, int skillId)
     {
-        var skill = _context.Skills.FirstOrDefault(skill => skill.Id == skillId);
+        var skill = _context.Skills.FirstOrDefault(skill => skill.Id == skillId) ?? throw new SkillNotFoundException();
 
         pokemon.Skills.Add(skill);
 

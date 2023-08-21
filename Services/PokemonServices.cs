@@ -1,5 +1,6 @@
 ﻿using VortiDex.Dtos.Request.DtosPokemon;
 using VortiDex.Dtos.Responses.DtosPokemon;
+using VortiDex.Exceptions.NotFoundExceptions;
 using VortiDex.Infra.Repositories;
 using VortiDex.Mapper.Implementations;
 
@@ -20,6 +21,11 @@ public class PokemonServices
         var pokemon = _mapper
             .ToModel(createDto);
 
+        if (pokemon.PokeTypesId.Count > 2)
+        {
+            throw new BadHttpRequestException("A pokemon can only have 2 types");
+        }
+
         pokemon = _pokemonRep
             .CreateRep(pokemon);
 
@@ -32,8 +38,7 @@ public class PokemonServices
     public ReadPokemonDtoWithRelations GetById(int pokemonId)
     {
         var pokemon = _pokemonRep
-            .FindById(pokemonId);
-        //?? throw new StudentNotFoundException();
+            .FindById(pokemonId) ?? throw new PokemonNotFoundException();
 
         var dto = _mapper
             .ToReadDtoWithRelations(pokemon);
@@ -73,8 +78,7 @@ public class PokemonServices
     public void Delete(int pokemonId)
     {
         var pokemon = _pokemonRep
-           .FindById(pokemonId);
-        //?? throw new StudentNotFoundException();
+           .FindById(pokemonId) ?? throw new PokemonNotFoundException();
 
         _pokemonRep
             .DeleteRep(pokemon);
@@ -85,7 +89,7 @@ public class PokemonServices
     public ReadPokemonDtoWithRelations LearnMoveServ(int pokemonId, int skillId)
     {
         var pokemon = _pokemonRep
-            .FindById(pokemonId);
+            .FindById(pokemonId) ?? throw new PokemonNotFoundException();
 
         pokemon = _pokemonRep
             .LearnMoveRep(pokemon, skillId);

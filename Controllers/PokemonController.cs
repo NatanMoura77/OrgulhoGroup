@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using VortiDex.Dtos.Request.DtosPokemon;
+using VortiDex.Exceptions.NotFoundExceptions;
 using VortiDex.Services;
 
 namespace VortiDex.Controllers
@@ -25,25 +26,46 @@ namespace VortiDex.Controllers
         [HttpGet("{id}")]
         public IActionResult GetById(int id)
         {
-            var pokemon = _pokemonServices.GetById(id);
+            try
+            {
+                var pokemon = _pokemonServices.GetById(id);
 
-            return Ok(pokemon);
+                return Ok(pokemon);
+            }
+            catch (NotFoundException exception)
+            {
+                return NotFound(exception.Message);
+            }
         }
 
         [HttpPost]
         public IActionResult Create([FromBody] CreatePokemonDto dto)
         {
-            var pokemon = _pokemonServices.CreateServ(dto);
+            try
+            {
+                var pokemon = _pokemonServices.CreateServ(dto);
 
-            return CreatedAtAction(nameof(GetById), new { id = pokemon.Id }, pokemon);
+                return CreatedAtAction(nameof(GetById), new { id = pokemon.Id }, pokemon);
+            }
+            catch (Exception exception)
+            {
+                return BadRequest(exception.Message);
+            }
         }
 
         [HttpPost("{id}/Skill{skillId}")]
         public IActionResult LearnMove(int id, int skillId)
         {
-            var pokemon = _pokemonServices.LearnMoveServ(id, skillId);
+            try
+            {
+                var pokemon = _pokemonServices.LearnMoveServ(id, skillId);
 
-            return Ok(pokemon);
+                return Ok(pokemon);
+            }
+            catch (NotFoundException exception)
+            {
+                return NotFound(exception.Message);
+            }
         }
 
         [HttpPut("{id}")]
@@ -57,10 +79,16 @@ namespace VortiDex.Controllers
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
-            _pokemonServices
-                .Delete(id);
+            try
+            {
+                _pokemonServices.Delete(id);
 
-            return NoContent();
+                return NoContent();
+            }
+            catch (NotFoundException exception)
+            {
+                return NotFound(exception.Message);
+            }
         }
     }
 }

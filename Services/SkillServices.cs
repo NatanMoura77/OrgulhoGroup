@@ -1,5 +1,6 @@
 ﻿using VortiDex.Dtos.Request.DtosSkill;
 using VortiDex.Dtos.Responses.DtosSkill;
+using VortiDex.Exceptions.NotFoundExceptions;
 using VortiDex.Infra.Repositories;
 using VortiDex.Mapper.Implementations;
 
@@ -33,8 +34,7 @@ public class SkillServices
     public ReadSkillDtoWithRelations GetById(int skillId)
     {
         var skill = _skillRep
-            .FindById(skillId);
-        //?? throw new StudentNotFoundException();
+            .FindById(skillId) ?? throw new SkillNotFoundException();
 
         var dto = _mapper
             .ToReadDtoWithRelations(skill);
@@ -79,8 +79,7 @@ public class SkillServices
     public void Delete(int skillId)
     {
         var skill = _skillRep
-           .FindById(skillId);
-        //?? throw new StudentNotFoundException();
+           .FindById(skillId) ?? throw new SkillNotFoundException();
 
         _skillRep
             .DeleteRep(skill);

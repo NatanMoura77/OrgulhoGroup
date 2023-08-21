@@ -34,6 +34,7 @@ public class Pokemon
     public ICollection<PokeType> PokeTypes { get; set; }
 
     [NotMapped]
+    [JsonIgnore]
     public ICollection<string> PokeTypesId { get; set; }
 
     [JsonIgnore]

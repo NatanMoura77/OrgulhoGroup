@@ -1,5 +1,6 @@
 ﻿using VortiDex.Dtos.Request.DtosPokedex;
 using VortiDex.Dtos.Responses.DtosPokedex;
+using VortiDex.Exceptions.NotFoundExceptions;
 using VortiDex.Infra.Repositories;
 using VortiDex.Mapper.Implementations;
 
@@ -15,7 +16,7 @@ public class PokedexServices
         _mapper = mapper;
     }
 
-    public void CreateServ(CreatePokedexDto createDto)
+    public ReadPokedexDtoWithRelations CreateServ(CreatePokedexDto createDto)
     {
         var pokedex = _mapper
             .ToModel(createDto);
@@ -23,16 +24,20 @@ public class PokedexServices
         pokedex = _pokedexRep
             .CreateRep(pokedex);
 
+        var dto = _mapper.ToReadDtoWithRelations(pokedex);
+
+        return dto;
     }
 
-    public void GetById(int pokedexId)
+    public ReadPokedexDtoWithRelations GetById(int pokedexId)
     {
         var pokedex = _pokedexRep
-            .FindById(pokedexId);
-        //?? throw new StudentNotFoundException();
+            .FindById(pokedexId) ?? throw new PokedexNotFoundException();
 
         var dto = _mapper
             .ToReadDtoWithRelations(pokedex);
+
+        return dto;
     }
 
     public ICollection<ReadPokedexDtoWithRelations> GetAllServ()
@@ -46,31 +51,40 @@ public class PokedexServices
         return dto;
     }
 
-    public void UpdateServ(int pokedexId, UpdatePokedexDto updateDto)
+    public ReadPokedexDtoWithRelations UpdateServ(int pokedexId, UpdatePokedexDto updateDto)
     {
         var pokedex = _pokedexRep.FindById(pokedexId);
 
         if (pokedex is null)
         {
-            CreateServ(_mapper.ToCreateDto(updateDto));
+            return CreateServ(_mapper.ToCreateDto(updateDto));
         }
         else
         {
             pokedex = _mapper.ToExistentModel(updateDto, pokedex);
             _pokedexRep.UpdateRep(pokedex);
-            _mapper.ToReadDtoWithRelations(pokedex);
+
+            return _mapper.ToReadDtoWithRelations(pokedex);
         }
     }
 
     public void Delete(int pokedexId)
     {
         var pokedex = _pokedexRep
-           .FindById(pokedexId);
-        //?? throw new StudentNotFoundException();
+           .FindById(pokedexId) ?? throw new PokedexNotFoundException();
 
         _pokedexRep
             .DeleteRep(pokedex);
 
         return;
+    }
+
+    public ReadPokedexDtoWithRelations AddPokemonToPokedex(int pokedexId, int pokemonId)
+    {
+        var pokedex = _pokedexRep.FindById(pokedexId) ?? throw new PokedexNotFoundException();
+
+        pokedex = _pokedexRep.AddPokemonToPokedex(pokedex, pokemonId);
+
+        return _mapper.ToReadDtoWithRelations(pokedex);
     }
 }

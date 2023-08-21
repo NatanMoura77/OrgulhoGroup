@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using VortiDex.Dtos.Request.DtosPokeType;
 using VortiDex.Dtos.Request.DtosTrainer;
+using VortiDex.Exceptions.NotFoundExceptions;
 using VortiDex.Services;
 
 namespace VortiDex.Controllers;
@@ -20,17 +21,23 @@ public class PokeTypeController : ControllerBase
     public IActionResult GetAll()
     {
         var pokeType = _pokeTypeServ.GetAllServ();
+
         return Ok(pokeType);
     }
 
     [HttpGet("{id}")]
     public IActionResult GetById(string id)
     {
-        var pokeType = _pokeTypeServ.GetById(id);
+        try
+        {
+            var pokeType = _pokeTypeServ.GetById(id);
 
-        if (pokeType is null) return NotFound();
-
-        return Ok(pokeType);
+            return Ok(pokeType);
+        }
+        catch (NotFoundException exception)
+        {
+            return NotFound(exception.Message);
+        }
     }
 
     [HttpPost]
@@ -44,8 +51,7 @@ public class PokeTypeController : ControllerBase
     [HttpPut("{id}")]
     public IActionResult Update(string id, [FromBody] UpdatePokeTypeDto dto)
     {
-        var pokeType = _pokeTypeServ
-           .UpdateServ(id, dto);
+        var pokeType = _pokeTypeServ.UpdateServ(id, dto);
 
         return Ok(pokeType);
     }
@@ -53,9 +59,15 @@ public class PokeTypeController : ControllerBase
     [HttpDelete("{id}")]
     public IActionResult Delete(string id)
     {
-        _pokeTypeServ
-            .Delete(id);
+        try
+        {
+            _pokeTypeServ.Delete(id);
 
-        return NoContent();
+            return NoContent();
+        }
+        catch(NotFoundException exception)
+        {
+            return NotFound(exception.Message);
+        }
     }
 }

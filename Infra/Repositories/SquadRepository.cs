@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using VortiDex.Exceptions.NotFoundExceptions;
 using VortiDex.Model;
 
 namespace VortiDex.Infra.Repositories;
@@ -54,5 +55,15 @@ public class SquadRepository
     public bool Exists(int id)
     {
        return _context.Squads.Any(squad => squad.Id == id);
+    }
+
+    public Squad AddPokemonToSquad(Squad squad, int pokemonId)
+    {
+        var pokemon = _context.Pokemon.FirstOrDefault(pokemon => pokemon.Id == pokemonId) ?? throw new PokemonNotFoundException();
+
+        squad.Pokemons.Add(pokemon);
+
+        _context.SaveChanges();
+        return (squad);
     }
 }

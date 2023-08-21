@@ -1,5 +1,6 @@
 ﻿using VortiDex.Dtos.Request.DtosSquad;
 using VortiDex.Dtos.Responses.DtosSquad;
+using VortiDex.Exceptions.NotFoundExceptions;
 using VortiDex.Infra.Repositories;
 using VortiDex.Mapper.Implementations;
 
@@ -32,8 +33,7 @@ public class SquadServices
     public ReadSquadDtoWithRelations GetById(int squadId)
     {
         var squad = _squadRep
-            .FindById(squadId);
-        //?? throw new StudentNotFoundException();
+            .FindById(squadId) ?? throw new SquadNotFoundException();
 
         var dto = _mapper
             .ToReadDtoWithRelations(squad);
@@ -78,12 +78,25 @@ public class SquadServices
     public void Delete(int squadId)
     {
         var squad = _squadRep
-           .FindById(squadId);
-        //?? throw new StudentNotFoundException();
+           .FindById(squadId) ?? throw new SquadNotFoundException();
 
         _squadRep
             .DeleteRep(squad);
 
         return;
+    }
+
+    public ReadSquadDtoWithRelations AddPokemonToSquad(int squadId, int pokemonId)
+    {
+        var squad = _squadRep
+            .FindById(squadId) ?? throw new SquadNotFoundException();
+
+        squad = _squadRep
+            .AddPokemonToSquad(squad, pokemonId);
+
+        var squadDto = _mapper
+            .ToReadDtoWithRelations(squad);
+
+        return squadDto;
     }
 }

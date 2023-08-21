@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using VortiDex.Dtos.Request.DtosTrainer;
+using VortiDex.Exceptions.NotFoundExceptions;
 using VortiDex.Services;
 
 namespace VortiDex.Controllers
@@ -25,11 +26,15 @@ namespace VortiDex.Controllers
         [HttpGet("{id}")]
         public IActionResult GetById(int id)
         {
-            var trainer = _trainerServ.GetById(id);
-
-            if (trainer is null) return NotFound();
-
-            return Ok(trainer);
+            try
+            {
+                var trainer = _trainerServ.GetById(id);
+                return Ok(trainer);
+            }
+            catch (NotFoundException exception)
+            {
+                return NotFound(exception.Message);
+            }
         }
 
         [HttpPost]
@@ -43,8 +48,9 @@ namespace VortiDex.Controllers
         [HttpPut("{id}")]
         public IActionResult Update(int id, [FromBody] UpdateTrainerDto dto)
         {
-            var trainer = _trainerServ
-               .UpdateServ(id, dto);
+            var trainer =
+                _trainerServ
+                .UpdateServ(id, dto);
 
             return Ok(trainer);
         }
@@ -52,10 +58,18 @@ namespace VortiDex.Controllers
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
-            _trainerServ
-                .Delete(id);
+            try
+            {
+                _trainerServ.Delete(id);
 
-            return NoContent();
+                return NoContent();
+            }
+            catch(NotFoundException exception)
+            {
+                return NotFound(exception.Message);
+            }
+
+
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using VortiDex.Dtos.Request.DtosPokeType;
 using VortiDex.Dtos.Responses.DtosPokeType;
+using VortiDex.Exceptions.NotFoundExceptions;
 using VortiDex.Infra.Repositories;
 using VortiDex.Mapper.Implementations;
 
@@ -33,8 +34,7 @@ public class PokeTypeServices
     public ReadPokeTypeDtoWithRelations GetById(string pokeTypeId)
     {
         var pokeType = _pokeTypeRep
-            .FindById(pokeTypeId);
-        //?? throw new StudentNotFoundException();
+            .FindById(pokeTypeId) ?? throw new PokeTypeNotFoundException();
 
         var dto = _mapper
             .ToReadDtoWithRelations(pokeType);
@@ -73,8 +73,7 @@ public class PokeTypeServices
     public void Delete(string pokeTypeId)
     {
         var pokeType = _pokeTypeRep
-           .FindById(pokeTypeId);
-        //?? throw new StudentNotFoundException();
+           .FindById(pokeTypeId) ?? throw new PokeTypeNotFoundException();
 
         _pokeTypeRep
             .DeleteRep(pokeType);

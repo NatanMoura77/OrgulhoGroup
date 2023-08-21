@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using VortiDex.Dtos.Request.DtosSkill;
+using VortiDex.Exceptions.NotFoundExceptions;
 using VortiDex.Services;
 
 namespace VortiDex.Controllers
@@ -25,9 +26,16 @@ namespace VortiDex.Controllers
         [HttpGet("{id}")]
         public IActionResult GetById(int id)
         {
-            var skill = _skillServ.GetById(id);
+            try
+            {
+                var skill = _skillServ.GetById(id);
 
-            return Ok(skill);
+                return Ok(skill);
+            }
+            catch (NotFoundException exception)
+            {
+                return NotFound(exception.Message);
+            }
         }
 
         [HttpPost]
@@ -50,10 +58,16 @@ namespace VortiDex.Controllers
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
-            _skillServ
-                .Delete(id);
+            try
+            {
+                _skillServ.Delete(id);
 
-            return NoContent();
+                return NoContent();
+            }
+            catch (NotFoundException exception)
+            {
+                return NotFound(exception.Message);
+            }
         }
     }
 }
