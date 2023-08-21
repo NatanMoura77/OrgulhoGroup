@@ -26,17 +26,10 @@ public class PokedexMapper
     public CreatePokedexDto ToCreateDto(UpdatePokedexDto dto) =>
         _mapper.Map<CreatePokedexDto>(dto);
 
-    public ReadPokedexDtoWithRelations ToReadDto(Pokedex pokedex) =>
-        _mapper.Map<ReadPokedexDtoWithRelations>(pokedex);
-
-    public ICollection<ReadPokedexDtoWithRelations> ToReadDtoCollection(
-        ICollection<Pokedex> pokedexs
-    ) => _mapper.Map<ICollection<ReadPokedexDtoWithRelations>>(pokedexs);
-
     public ReadPokedexDtoWithRelations ToReadDtoWithRelations(Pokedex pokedex) =>
         _mapper.Map<ReadPokedexDtoWithRelations>(pokedex);
 
-    public ICollection<ReadPokedexDtoWithRelations> ToReadDtoWithRelationsCollection(
+    public ICollection<ReadPokedexDto> ToReadDtoCollection(
         ICollection<Pokedex> pokedexs
-    ) => _mapper.Map<ICollection<ReadPokedexDtoWithRelations>>(pokedexs);
+    ) => _mapper.Map<ICollection<ReadPokedexDto>>(pokedexs);
 }

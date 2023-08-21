@@ -42,13 +42,13 @@ public class SkillServices
         return (dto);
     }
 
-    public ICollection<ReadSkillDtoWithRelations> GetAllServ()
+    public ICollection<ReadSkillDto> GetAllServ()
     {
         var skill = _skillRep
             .GetAllRep();
 
         var dto = _mapper
-            .ToReadDtoWithRelationsCollection(skill);
+            .ToReadDtoCollection(skill);
 
         return dto;
     }

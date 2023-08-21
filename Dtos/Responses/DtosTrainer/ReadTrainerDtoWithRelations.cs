@@ -1,4 +1,4 @@
-﻿using VortiDex.Model;
+﻿using VortiDex.Dtos.Responses.DtosSquad;
 
 namespace VortiDex.Dtos.Responses.DtosTrainer;
 
@@ -8,6 +8,5 @@ public class ReadTrainerDtoWithRelations
 
     public required string Name { get; set; }
 
-    public required ICollection<Squad> Squads { get; set; }
+    public required ICollection<ReadSquadDto> Squads { get; set; }
 }
-

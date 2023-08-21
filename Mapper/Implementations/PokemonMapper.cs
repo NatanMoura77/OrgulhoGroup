@@ -26,17 +26,10 @@ public class PokemonMapper
     public CreatePokemonDto ToCreateDto(UpdatePokemonDto dto) =>
         _mapper.Map<CreatePokemonDto>(dto);
 
-    public ReadPokemonDto ToReadDto(Pokemon pokemon) =>
-        _mapper.Map<ReadPokemonDto>(pokemon);
-
     public ICollection<ReadPokemonDto> ToReadDtoCollection(
         ICollection<Pokemon> pokemons
     ) => _mapper.Map<ICollection<ReadPokemonDto>>(pokemons);
 
     public ReadPokemonDtoWithRelations ToReadDtoWithRelations(Pokemon pokemon) =>
         _mapper.Map<ReadPokemonDtoWithRelations>(pokemon);
-
-    public ICollection<ReadPokemonDtoWithRelations> ToReadDtoWithRelationsCollection(
-        ICollection<Pokemon> pokemons
-    ) => _mapper.Map<ICollection<ReadPokemonDtoWithRelations>>(pokemons);
 }

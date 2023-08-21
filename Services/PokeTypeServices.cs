@@ -42,7 +42,7 @@ public class PokeTypeServices
         return dto;
     }
 
-    public ICollection<ReadPokeTypeDtoWithRelations> GetAllServ()
+    public ICollection<ReadPokeTypeDto> GetAllServ()
     {
         var pokeType = _pokeTypeRep
             .GetAllRep();

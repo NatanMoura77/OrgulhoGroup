@@ -26,12 +26,9 @@ public class PokeTypeMapper
     public CreatePokeTypeDto ToCreateDto(UpdatePokeTypeDto dto) =>
         _mapper.Map<CreatePokeTypeDto>(dto);
 
-    public ReadPokeTypeDtoWithRelations ToReadDto(PokeType pokeType) =>
-        _mapper.Map<ReadPokeTypeDtoWithRelations>(pokeType);
-
-    public ICollection<ReadPokeTypeDtoWithRelations> ToReadDtoCollection(
+    public ICollection<ReadPokeTypeDto> ToReadDtoCollection(
         ICollection<PokeType> pokeTypes
-    ) => _mapper.Map<ICollection<ReadPokeTypeDtoWithRelations>>(pokeTypes);
+    ) => _mapper.Map<ICollection<ReadPokeTypeDto>>(pokeTypes);
 
     public ReadPokeTypeDtoWithRelations ToReadDtoWithRelations(PokeType pokeType) =>
         _mapper.Map<ReadPokeTypeDtoWithRelations>(pokeType);

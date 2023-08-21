@@ -29,18 +29,13 @@ public class Pokemon
     public required string Picture { get; set; }
 
     [Required]
-    [JsonIgnore]
-    [MaxLength(2)]
     public ICollection<PokeType> PokeTypes { get; set; }
 
     [NotMapped]
-    [JsonIgnore]
     public ICollection<string> PokeTypesId { get; set; }
 
-    [JsonIgnore]
     public ICollection<Squad>? Squads { get; set; }
 
-    [JsonIgnore]
     public ICollection<Skill> Skills { get; set; }
 
     public Pokemon()

@@ -26,17 +26,10 @@ public class TrainerMapper
     public CreateTrainerDto ToCreateDto(UpdateTrainerDto dto) =>
         _mapper.Map<CreateTrainerDto>(dto);
 
-    public ReadTrainerDto ToReadDto(Trainer trainer) =>
-        _mapper.Map<ReadTrainerDto>(trainer);
-
     public ICollection<ReadTrainerDto> ToReadDtoCollection(
         ICollection<Trainer> trainers
     ) => _mapper.Map<ICollection<ReadTrainerDto>>(trainers);
 
     public ReadTrainerDtoWithRelations ToReadDtoWithRelations(Trainer trainer) =>
         _mapper.Map<ReadTrainerDtoWithRelations>(trainer);
-
-    public ICollection<ReadTrainerDtoWithRelations> ToReadDtoWithRelationsCollection(
-        ICollection<Trainer> trainers
-    ) => _mapper.Map<ICollection<ReadTrainerDtoWithRelations>>(trainers);
 }

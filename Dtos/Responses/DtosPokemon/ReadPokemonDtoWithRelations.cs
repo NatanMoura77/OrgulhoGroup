@@ -1,4 +1,5 @@
-﻿using VortiDex.Model;
+﻿using VortiDex.Dtos.Responses.DtosPokeType;
+using VortiDex.Dtos.Responses.DtosSkill;
 
 namespace VortiDex.Dtos.Responses.DtosPokemon;
 
@@ -18,7 +19,7 @@ public class ReadPokemonDtoWithRelations
 
     public required string Picture { get; set; }
 
-    public ICollection<PokeType> PokeTypes { get; set; }
+    public ICollection<ReadPokeTypeDto> PokeTypes { get; set; }
 
-    public ICollection<Skill> Skills { get; set; }
+    public ICollection<ReadSkillDto> Skills { get; set; }
 }

@@ -46,13 +46,13 @@ public class PokemonServices
         return dto;
     }
 
-    public ICollection<ReadPokemonDtoWithRelations> GetAllServ()
+    public ICollection<ReadPokemonDto> GetAllServ()
     {
         var pokemon = _pokemonRep
             .GetAllRep();
 
         var dto = _mapper
-            .ToReadDtoWithRelationsCollection(pokemon);
+            .ToReadDtoCollection(pokemon);
 
         return dto;
     }

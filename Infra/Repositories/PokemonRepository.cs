@@ -15,11 +15,19 @@ public class PokemonRepository
 
     public Pokemon CreateRep(Pokemon pokemon)
     {
-        List<PokeType> pokeTypes = new List<PokeType>();
+        var pokeTypes = new List<PokeType>();
 
-        foreach(string poketype in pokemon.PokeTypesId)
+        //pokeTypes = (from pokeType in _context.PokeTypes
+        //            where pokemon.PokeTypes.Contains(pokeType)
+        //            select pokeType
+        //            ).ToList();
+
+        foreach (string poketype in pokemon.PokeTypesId)
         {
-            pokeTypes = _context.PokeTypes.Where(pokeType => pokeType.Name == poketype).ToList();
+            pokeTypes =
+                _context.PokeTypes
+                .Where(pokeType => pokeType.Name == poketype)
+                .ToList();
         }
 
         pokemon.PokeTypes = pokeTypes;
@@ -32,7 +40,11 @@ public class PokemonRepository
 
     public Pokemon? FindById(int id)
     {
-        var pokemon = _context.Pokemon.Include(pokemon => pokemon.PokeTypes).ToArray().FirstOrDefault(pokemon => pokemon.Id == id);
+        var pokemon = 
+            _context.Pokemon
+            .Include(pokemon => pokemon.PokeTypes)
+            .ToArray()
+            .FirstOrDefault(pokemon => pokemon.Id == id);
 
         return
              _context.Pokemon

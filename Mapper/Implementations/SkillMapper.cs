@@ -26,17 +26,10 @@ public class SkillMapper
     public CreateSkillDto ToCreateDto(UpdateSkillDto dto) =>
         _mapper.Map<CreateSkillDto>(dto);
 
-    public ReadSkillDto ToReadDto(Skill skill) =>
-        _mapper.Map<ReadSkillDto>(skill);
-
     public ICollection<ReadSkillDto> ToReadDtoCollection(
         ICollection<Skill> skills
     ) => _mapper.Map<ICollection<ReadSkillDto>>(skills);
 
     public ReadSkillDtoWithRelations ToReadDtoWithRelations(Skill skill) =>
         _mapper.Map<ReadSkillDtoWithRelations>(skill);
-
-    public ICollection<ReadSkillDtoWithRelations> ToReadDtoWithRelationsCollection(
-        ICollection<Skill> skills
-    ) => _mapper.Map<ICollection<ReadSkillDtoWithRelations>>(skills);
 }

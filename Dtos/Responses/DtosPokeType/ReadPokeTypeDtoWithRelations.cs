@@ -3,7 +3,9 @@ using VortiDex.Dtos.Responses.DtosSkill;
 
 namespace VortiDex.Dtos.Responses.DtosPokeType;
 
-public class ReadPokeTypeDto
+public class ReadPokeTypeDtoWithRelations
 {
     public required string Name { get; set; }
+    public ICollection<ReadPokemonDto> Pokemon { get; set; }
+    public ICollection<ReadSkillDto> Skills { get; set; }
 }

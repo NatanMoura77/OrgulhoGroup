@@ -26,17 +26,10 @@ public class SquadMapper
     public CreateSquadDto ToCreateDto(UpdateSquadDto dto) =>
         _mapper.Map<CreateSquadDto>(dto);
 
-    public ReadSquadDto ToReadDto(Squad squad) =>
-        _mapper.Map<ReadSquadDto>(squad);
-
     public ICollection<ReadSquadDto> ToReadDtoCollection(
         ICollection<Squad> squads
     ) => _mapper.Map<ICollection<ReadSquadDto>>(squads);
 
     public ReadSquadDtoWithRelations ToReadDtoWithRelations(Squad squad) =>
         _mapper.Map<ReadSquadDtoWithRelations>(squad);
-
-    public ICollection<ReadSquadDtoWithRelations> ToReadDtoWithRelationsCollection(
-        ICollection<Squad> squads
-    ) => _mapper.Map<ICollection<ReadSquadDtoWithRelations>>(squads);
 }

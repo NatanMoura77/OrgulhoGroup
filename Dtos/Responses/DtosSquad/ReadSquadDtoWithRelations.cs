@@ -1,4 +1,5 @@
-﻿using VortiDex.Model;
+﻿using VortiDex.Dtos.Responses.DtosPokemon;
+using VortiDex.Model;
 
 namespace VortiDex.Dtos.Responses.DtosSquad;
 
@@ -10,5 +11,5 @@ public class ReadSquadDtoWithRelations
 
     public required int TrainerId { get; set; }
 
-    public required ICollection<Pokemon> Pokemons { get; set; }
+    public required ICollection<ReadPokemonDto> Pokemons { get; set; }
 }

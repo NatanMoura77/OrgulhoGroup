@@ -42,13 +42,13 @@ public class TrainerServices
 
     }
 
-    public ICollection<ReadTrainerDtoWithRelations> GetAllServ()
+    public ICollection<ReadTrainerDto> GetAllServ()
     {
         var trainer = _trainerRep
             .GetAllRep();
 
         var dto = _mapper
-            .ToReadDtoWithRelationsCollection(trainer);
+            .ToReadDtoCollection(trainer);
 
         return dto;
     }

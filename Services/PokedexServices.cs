@@ -40,13 +40,13 @@ public class PokedexServices
         return dto;
     }
 
-    public ICollection<ReadPokedexDtoWithRelations> GetAllServ()
+    public ICollection<ReadPokedexDto> GetAllServ()
     {
         var pokedex = _pokedexRep
             .GetAllRep();
 
         var dto = _mapper
-            .ToReadDtoWithRelationsCollection(pokedex);
+            .ToReadDtoCollection(pokedex);
 
         return dto;
     }

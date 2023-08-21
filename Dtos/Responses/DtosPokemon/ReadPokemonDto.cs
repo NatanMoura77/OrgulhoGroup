@@ -13,5 +13,4 @@ public class ReadPokemonDto
     public required bool IsCatch { get; set; }
 
     public required string Picture { get; set; }
-
 }

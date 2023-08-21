@@ -41,13 +41,13 @@ public class SquadServices
         return (dto);
     }
 
-    public ICollection<ReadSquadDtoWithRelations> GetAllServ()
+    public ICollection<ReadSquadDto> GetAllServ()
     {
         var squad = _squadRep
             .GetAllRep();
 
         var dto = _mapper
-            .ToReadDtoWithRelationsCollection(squad);
+            .ToReadDtoCollection(squad);
 
         return dto;
     }
