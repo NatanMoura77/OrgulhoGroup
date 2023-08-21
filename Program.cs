@@ -35,6 +35,14 @@ public class Program
         builder.Services.AddScoped<SkillRepository>();
         builder.Services.AddScoped<SkillMapper>();
 
+        builder.Services.AddScoped<PokemonServices>();
+        builder.Services.AddScoped<PokemonRepository>();
+        builder.Services.AddScoped<PokemonMapper>();
+
+        builder.Services.AddScoped<PokeTypeServices>();
+        builder.Services.AddScoped<PokeTypeRepository>();
+        builder.Services.AddScoped<PokeTypeMapper>();
+
         builder.Services.AddControllers();
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
         builder.Services.AddEndpointsApiExplorer();

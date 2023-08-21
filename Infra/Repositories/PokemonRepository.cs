@@ -14,6 +14,15 @@ public class PokemonRepository
 
     public Pokemon CreateRep(Pokemon pokemon)
     {
+        List<PokeType> pokeTypes = new List<PokeType>();
+
+        foreach(string poketype in pokemon.PokeTypesId)
+        {
+            pokeTypes = _context.PokeTypes.Where(pokeType => pokeType.Name == poketype).ToList();
+        }
+
+        pokemon.PokeTypes = pokeTypes;
+
         _context.Pokemon.Add(pokemon);
         _context.SaveChanges();
 
@@ -22,14 +31,20 @@ public class PokemonRepository
 
     public Pokemon? FindById(int id)
     {
-       return _context.Pokemon.FirstOrDefault(pokemon => pokemon.Id == id);
+        var pokemon = _context.Pokemon.Include(pokemon => pokemon.PokeTypes).ToArray().FirstOrDefault(pokemon => pokemon.Id == id);
+
+        return
+             _context.Pokemon
+             .FirstOrDefault(pokemon => pokemon.Id == id);
     }
 
     public ICollection<Pokemon> GetAllRep()
     {
-       return _context.Pokemon
+        var pokemon = _context.Pokemon.ToList();
+
+        return _context.Pokemon
+            .Include(pokemon => pokemon.Skills)
             .Include(pokemon => pokemon.PokeTypes)
-            .ThenInclude(pokemon => pokemon.Skills)
             .ToList();
     }
 
@@ -51,6 +66,17 @@ public class PokemonRepository
 
     public bool Exists(int id)
     {
-       return _context.Pokemon.Any(pokemon => pokemon.Id == id);
+        return _context.Pokemon.Any(pokemon => pokemon.Id == id);
+    }
+
+    public Pokemon LearnMoveRep(Pokemon pokemon, int skillId)
+    {
+        var skill = _context.Skills.FirstOrDefault(skill => skill.Id == skillId);
+
+        pokemon.Skills.Add(skill);
+
+        _context.SaveChanges();
+
+        return (pokemon);
     }
 }

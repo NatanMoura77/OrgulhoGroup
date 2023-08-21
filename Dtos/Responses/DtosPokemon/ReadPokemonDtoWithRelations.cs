@@ -4,6 +4,8 @@ namespace VortiDex.Dtos.Responses.DtosPokemon;
 
 public class ReadPokemonDtoWithRelations
 {
+    public required int Id { get; set; }
+
     public required string Name { get; set; }
 
     public required string Description { get; set; }
@@ -16,7 +18,7 @@ public class ReadPokemonDtoWithRelations
 
     public required string Picture { get; set; }
 
-    public required PokeType[] PokeTypes { get; set; } = new PokeType[2];
+    public ICollection<PokeType> PokeTypes { get; set; }
 
-    public required ICollection<Skill> Skills { get; set; }
+    public ICollection<Skill> Skills { get; set; }
 }

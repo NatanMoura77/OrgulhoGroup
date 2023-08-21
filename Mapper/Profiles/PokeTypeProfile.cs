@@ -12,5 +12,7 @@ public class PokeTypeProfile : Profile
         CreateMap<CreatePokeTypeDto, PokeType>().ReverseMap();
         CreateMap<UpdatePokeTypeDto, PokeType>().ReverseMap();
         CreateMap<PokeType, ReadPokeTypeDtoWithRelations>();
+
+
     }
 }

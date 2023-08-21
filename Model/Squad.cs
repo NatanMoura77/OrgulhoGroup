@@ -20,7 +20,7 @@ public class Squad
     public Trainer Trainer { get; set; }
 
     [JsonIgnore]
-    public ICollection<Pokemon> Pokemons { get; set; }
+    public ICollection<Pokemon>? Pokemons { get; set; }
 
     public Squad()
     {

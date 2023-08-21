@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using VortiDex.Dtos.Responses.DtosPokeType;
 using VortiDex.Model;
 
 namespace VortiDex.Infra.Repositories;
@@ -14,6 +15,10 @@ public class SkillRepository
 
     public Skill CreateRep(Skill skill)
     {
+        var pokeType = _context.PokeTypes.FirstOrDefault(pokeType => pokeType.Name == skill.Type.Name);
+
+        skill.Type = pokeType;
+
         _context.Skills.Add(skill);
         _context.SaveChanges();
 
@@ -31,6 +36,7 @@ public class SkillRepository
     {
        return _context
             .Skills
+            .Include(skill => skill.Type)
             .Include(skill => skill.Pokemons)
             .ThenInclude(pokemon => pokemon.PokeTypes)
             .ToList();

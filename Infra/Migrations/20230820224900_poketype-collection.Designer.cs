@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using VortiDex.Infra;
 
@@ -11,9 +12,11 @@ using VortiDex.Infra;
 namespace VortiDex.Migrations
 {
     [DbContext(typeof(PokeContext))]
-    partial class PokeContextModelSnapshot : ModelSnapshot
+    [Migration("20230820224900_poketype-collection")]
+    partial class poketypecollection
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -34,7 +37,7 @@ namespace VortiDex.Migrations
 
                     b.HasIndex("PokemonId");
 
-                    b.ToTable("PokeTypePokemon", (string)null);
+                    b.ToTable("PokeTypePokemon");
                 });
 
             modelBuilder.Entity("PokemonSkill", b =>
@@ -49,7 +52,7 @@ namespace VortiDex.Migrations
 
                     b.HasIndex("SkillsId");
 
-                    b.ToTable("PokemonSkill", (string)null);
+                    b.ToTable("PokemonSkill");
                 });
 
             modelBuilder.Entity("PokemonSquad", b =>
@@ -64,7 +67,7 @@ namespace VortiDex.Migrations
 
                     b.HasIndex("SquadsId");
 
-                    b.ToTable("PokemonSquad", (string)null);
+                    b.ToTable("PokemonSquad");
                 });
 
             modelBuilder.Entity("VortiDex.Model.PokeType", b =>
@@ -74,7 +77,7 @@ namespace VortiDex.Migrations
 
                     b.HasKey("Name");
 
-                    b.ToTable("PokeTypes", (string)null);
+                    b.ToTable("PokeTypes");
                 });
 
             modelBuilder.Entity("VortiDex.Model.Pokedex", b =>
@@ -93,7 +96,7 @@ namespace VortiDex.Migrations
                     b.HasIndex("TrainerId")
                         .IsUnique();
 
-                    b.ToTable("Pokedex", (string)null);
+                    b.ToTable("Pokedex");
                 });
 
             modelBuilder.Entity("VortiDex.Model.Pokemon", b =>
@@ -132,7 +135,7 @@ namespace VortiDex.Migrations
 
                     b.HasIndex("PokedexId");
 
-                    b.ToTable("Pokemon", (string)null);
+                    b.ToTable("Pokemon");
                 });
 
             modelBuilder.Entity("VortiDex.Model.Skill", b =>
@@ -159,7 +162,7 @@ namespace VortiDex.Migrations
 
                     b.HasIndex("TypeName");
 
-                    b.ToTable("Skills", (string)null);
+                    b.ToTable("Skills");
                 });
 
             modelBuilder.Entity("VortiDex.Model.Squad", b =>
@@ -181,7 +184,7 @@ namespace VortiDex.Migrations
 
                     b.HasIndex("TrainerId");
 
-                    b.ToTable("Squads", (string)null);
+                    b.ToTable("Squads");
                 });
 
             modelBuilder.Entity("VortiDex.Model.Trainer", b =>
@@ -198,7 +201,7 @@ namespace VortiDex.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Trainers", (string)null);
+                    b.ToTable("Trainers");
                 });
 
             modelBuilder.Entity("PokeTypePokemon", b =>

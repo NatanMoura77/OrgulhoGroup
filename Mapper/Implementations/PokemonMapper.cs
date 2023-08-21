@@ -33,8 +33,8 @@ public class PokemonMapper
         ICollection<Pokemon> pokemons
     ) => _mapper.Map<ICollection<ReadPokemonDto>>(pokemons);
 
-    public ReadPokemonDto ToReadDtoWithRelations(Pokemon pokemon) =>
-        _mapper.Map<ReadPokemonDto>(pokemon);
+    public ReadPokemonDtoWithRelations ToReadDtoWithRelations(Pokemon pokemon) =>
+        _mapper.Map<ReadPokemonDtoWithRelations>(pokemon);
 
     public ICollection<ReadPokemonDtoWithRelations> ToReadDtoWithRelationsCollection(
         ICollection<Pokemon> pokemons

@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\natan\\source\\repos\\VortiDex-master\\VortiDex.csproj": {}
+    "D:\\Vortigo\\OrgulhoGroup\\VortiDex.csproj": {}
   },
   "projects": {
-    "C:\\Users\\natan\\source\\repos\\VortiDex-master\\VortiDex.csproj": {
+    "D:\\Vortigo\\OrgulhoGroup\\VortiDex.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\natan\\source\\repos\\VortiDex-master\\VortiDex.csproj",
+        "projectUniqueName": "D:\\Vortigo\\OrgulhoGroup\\VortiDex.csproj",
         "projectName": "VortiDex",
-        "projectPath": "C:\\Users\\natan\\source\\repos\\VortiDex-master\\VortiDex.csproj",
-        "packagesPath": "C:\\Users\\natan\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\natan\\source\\repos\\VortiDex-master\\obj\\",
+        "projectPath": "D:\\Vortigo\\OrgulhoGroup\\VortiDex.csproj",
+        "packagesPath": "C:\\Users\\rodri\\.nuget\\packages\\",
+        "outputPath": "D:\\Vortigo\\OrgulhoGroup\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\natan\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\rodri\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -22,6 +22,7 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\sdk\\7.0.304\\Sdks\\Microsoft.NET.Sdk.Web\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -86,7 +87,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.400\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.304\\RuntimeIdentifierGraph.json"
         }
       }
     }

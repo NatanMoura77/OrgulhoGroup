@@ -15,7 +15,7 @@ public class PokemonServices
         _mapper = mapper;
     }
 
-    public void CreateServ(CreatePokemonDto createDto)
+    public ReadPokemonDtoWithRelations CreateServ(CreatePokemonDto createDto)
     {
         var pokemon = _mapper
             .ToModel(createDto);
@@ -23,9 +23,13 @@ public class PokemonServices
         pokemon = _pokemonRep
             .CreateRep(pokemon);
 
+        var readPokemon = _mapper
+            .ToReadDtoWithRelations(pokemon);
+        
+        return readPokemon;
     }
 
-    public void GetById(int pokemonId)
+    public ReadPokemonDtoWithRelations GetById(int pokemonId)
     {
         var pokemon = _pokemonRep
             .FindById(pokemonId);
@@ -33,6 +37,8 @@ public class PokemonServices
 
         var dto = _mapper
             .ToReadDtoWithRelations(pokemon);
+
+        return dto;
     }
 
     public ICollection<ReadPokemonDtoWithRelations> GetAllServ()
@@ -46,19 +52,21 @@ public class PokemonServices
         return dto;
     }
 
-    public void UpdateServ(int pokemonId, UpdatePokemonDto updateDto)
+    public ReadPokemonDtoWithRelations UpdateServ(int pokemonId, UpdatePokemonDto updateDto)
     {
         var pokemon = _pokemonRep.FindById(pokemonId);
 
         if (pokemon is null)
         {
-            CreateServ(_mapper.ToCreateDto(updateDto));
+            return CreateServ(_mapper.ToCreateDto(updateDto));
         }
         else
         {
             pokemon = _mapper.ToExistentModel(updateDto, pokemon);
             _pokemonRep.UpdateRep(pokemon);
-            _mapper.ToReadDtoWithRelations(pokemon);
+            var dto = _mapper.ToReadDtoWithRelations(pokemon);
+
+            return dto;
         }
     }
 
@@ -72,5 +80,19 @@ public class PokemonServices
             .DeleteRep(pokemon);
 
         return;
+    }
+
+    public ReadPokemonDtoWithRelations LearnMoveServ(int pokemonId, int skillId)
+    {
+        var pokemon = _pokemonRep
+            .FindById(pokemonId);
+
+        pokemon = _pokemonRep
+            .LearnMoveRep(pokemon, skillId);
+
+        var dto = _mapper
+            .ToReadDtoWithRelations(pokemon);
+
+        return dto;
     }
 }

@@ -20,7 +20,7 @@ public class Skill
     public PokeType Type { get; set; }
 
     [JsonIgnore]
-    public ICollection<Pokemon> Pokemons { get; set; }
+    public ICollection<Pokemon>? Pokemons { get; set; }
 
     public Skill()
     {

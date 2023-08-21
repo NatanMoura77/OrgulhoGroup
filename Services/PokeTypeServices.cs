@@ -15,7 +15,7 @@ public class PokeTypeServices
         _mapper = mapper;
     }
 
-    public void CreateServ(CreatePokeTypeDto createDto)
+    public ReadPokeTypeDtoWithRelations CreateServ(CreatePokeTypeDto createDto)
     {
         var pokeType = _mapper
             .ToModel(createDto);
@@ -23,9 +23,14 @@ public class PokeTypeServices
         pokeType = _pokeTypeRep
             .CreateRep(pokeType);
 
+        var readPokeType = _mapper
+            .ToReadDtoWithRelations(pokeType);
+
+        return readPokeType;
+
     }
 
-    public void GetById(string pokeTypeId)
+    public ReadPokeTypeDtoWithRelations GetById(string pokeTypeId)
     {
         var pokeType = _pokeTypeRep
             .FindById(pokeTypeId);
@@ -33,6 +38,8 @@ public class PokeTypeServices
 
         var dto = _mapper
             .ToReadDtoWithRelations(pokeType);
+
+        return dto;
     }
 
     public ICollection<ReadPokeTypeDtoWithRelations> GetAllServ()
@@ -46,19 +53,20 @@ public class PokeTypeServices
         return dto;
     }
 
-    public void UpdateServ(string pokeTypeId, UpdatePokeTypeDto updateDto)
+    public ReadPokeTypeDtoWithRelations UpdateServ(string pokeTypeId, UpdatePokeTypeDto updateDto)
     {
         var pokeType = _pokeTypeRep.FindById(pokeTypeId);
 
         if (pokeType is null)
         {
-            CreateServ(_mapper.ToCreateDto(updateDto));
+            return CreateServ(_mapper.ToCreateDto(updateDto));
         }
         else
         {
             pokeType = _mapper.ToExistentModel(updateDto, pokeType);
             _pokeTypeRep.UpdateRep(pokeType);
-            _mapper.ToReadDtoWithRelations(pokeType);
+
+            return _mapper.ToReadDtoWithRelations(pokeType);
         }
     }
 

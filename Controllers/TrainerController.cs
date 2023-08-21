@@ -23,9 +23,11 @@ namespace VortiDex.Controllers
         }
 
         [HttpGet("{id}")]
-        public IActionResult GetById(int id) 
+        public IActionResult GetById(int id)
         {
-           var trainer = _trainerServ.GetById(id);
+            var trainer = _trainerServ.GetById(id);
+
+            if (trainer is null) return NotFound();
 
             return Ok(trainer);
         }
@@ -34,12 +36,12 @@ namespace VortiDex.Controllers
         public IActionResult Create([FromBody] CreateTrainerDto dto)
         {
             var trainer = _trainerServ.CreateServ(dto);
-           
+
             return CreatedAtAction(nameof(GetById), new { id = trainer.Id }, trainer);
         }
 
         [HttpPut("{id}")]
-        public IActionResult Update(int id, [FromBody] UpdateTrainerDto dto) 
+        public IActionResult Update(int id, [FromBody] UpdateTrainerDto dto)
         {
             var trainer = _trainerServ
                .UpdateServ(id, dto);
@@ -48,7 +50,7 @@ namespace VortiDex.Controllers
         }
 
         [HttpDelete("{id}")]
-        public IActionResult Delete(int id) 
+        public IActionResult Delete(int id)
         {
             _trainerServ
                 .Delete(id);

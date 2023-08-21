@@ -16,5 +16,5 @@ public class CreatePokemonDto
 
     public required string Picture { get; set; }
 
-    public required PokeType[] PokeTypes { get; set; } = new PokeType[2];
+    public required List<string> PokeTypesId { get; set; }
 }
