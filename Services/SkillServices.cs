@@ -10,6 +10,7 @@ public class SkillServices
 {
     private readonly SkillRepository _skillRep;
     private readonly SkillMapper _mapper;
+
     public SkillServices(SkillRepository skillRep, SkillMapper mapper)
     {
         _skillRep = skillRep;
@@ -23,7 +24,6 @@ public class SkillServices
 
         _skillRep
             .CreateRep(skill);
-
 
         var readSkill = _mapper
             .ToReadDtoWithRelations(skill);

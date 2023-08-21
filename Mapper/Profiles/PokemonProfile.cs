@@ -12,6 +12,7 @@ public class PokemonProfile : Profile
         CreateMap<CreatePokemonDto, Pokemon>().ReverseMap();
         CreateMap<UpdatePokemonDto, Pokemon>().ReverseMap();
         CreateMap<Pokemon, ReadPokemonDto>();
+        CreateMap<UpdatePokemonDto, CreatePokemonDto>();
 
         CreateMap<Pokemon, ReadPokemonDtoWithRelations>()
             .ForMember(dest => dest.PokeTypes, opt => opt.MapFrom(src => src.PokeTypes))

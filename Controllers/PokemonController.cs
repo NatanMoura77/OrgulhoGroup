@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using VortiDex.Dtos.Request.DtosPokemon;
-using VortiDex.Exceptions.NotFoundExceptions;
+using VortiDex.Handlers;
 using VortiDex.Services;
 
 namespace VortiDex.Controllers
@@ -32,9 +32,9 @@ namespace VortiDex.Controllers
 
                 return Ok(pokemon);
             }
-            catch (NotFoundException exception)
+            catch (Exception exception)
             {
-                return NotFound(exception.Message);
+                return ControllerExceptionHandler.HandleException(exception);
             }
         }
 
@@ -49,7 +49,7 @@ namespace VortiDex.Controllers
             }
             catch (Exception exception)
             {
-                return BadRequest(exception.Message);
+                return ControllerExceptionHandler.HandleException(exception);
             }
         }
 
@@ -62,9 +62,9 @@ namespace VortiDex.Controllers
 
                 return Ok(pokemon);
             }
-            catch (NotFoundException exception)
+            catch (Exception exception)
             {
-                return NotFound(exception.Message);
+                return ControllerExceptionHandler.HandleException(exception);
             }
         }
 
@@ -85,9 +85,9 @@ namespace VortiDex.Controllers
 
                 return NoContent();
             }
-            catch (NotFoundException exception)
+            catch (Exception exception)
             {
-                return NotFound(exception.Message);
+                return ControllerExceptionHandler.HandleException(exception);
             }
         }
     }

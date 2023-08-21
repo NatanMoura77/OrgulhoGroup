@@ -17,11 +17,6 @@ public class PokemonRepository
     {
         var pokeTypes = new List<PokeType>();
 
-        //pokeTypes = (from pokeType in _context.PokeTypes
-        //            where pokemon.PokeTypes.Contains(pokeType)
-        //            select pokeType
-        //            ).ToList();
-
         foreach (string poketype in pokemon.PokeTypesId)
         {
             pokeTypes =
@@ -43,7 +38,7 @@ public class PokemonRepository
         var pokemon = 
             _context.Pokemon
             .Include(pokemon => pokemon.PokeTypes)
-            .ToArray()
+            .Include(pokemon => pokemon.Skills)
             .FirstOrDefault(pokemon => pokemon.Id == id);
 
         return

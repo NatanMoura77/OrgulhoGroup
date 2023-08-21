@@ -2,8 +2,6 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using VortiDex.Infra;
 
@@ -12,23 +10,19 @@ using VortiDex.Infra;
 namespace VortiDex.Migrations
 {
     [DbContext(typeof(PokeContext))]
-    [Migration("20230820224900_poketype-collection")]
-    partial class poketypecollection
+    partial class PokeContextModelSnapshot : ModelSnapshot
     {
-        /// <inheritdoc />
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "7.0.10")
-                .HasAnnotation("Relational:MaxIdentifierLength", 128);
-
-            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+                .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
             modelBuilder.Entity("PokeTypePokemon", b =>
                 {
                     b.Property<string>("PokeTypesName")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("varchar(255)");
 
                     b.Property<int>("PokemonId")
                         .HasColumnType("int");
@@ -37,7 +31,7 @@ namespace VortiDex.Migrations
 
                     b.HasIndex("PokemonId");
 
-                    b.ToTable("PokeTypePokemon");
+                    b.ToTable("PokeTypePokemon", (string)null);
                 });
 
             modelBuilder.Entity("PokemonSkill", b =>
@@ -52,7 +46,7 @@ namespace VortiDex.Migrations
 
                     b.HasIndex("SkillsId");
 
-                    b.ToTable("PokemonSkill");
+                    b.ToTable("PokemonSkill", (string)null);
                 });
 
             modelBuilder.Entity("PokemonSquad", b =>
@@ -67,17 +61,17 @@ namespace VortiDex.Migrations
 
                     b.HasIndex("SquadsId");
 
-                    b.ToTable("PokemonSquad");
+                    b.ToTable("PokemonSquad", (string)null);
                 });
 
             modelBuilder.Entity("VortiDex.Model.PokeType", b =>
                 {
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("varchar(255)");
 
                     b.HasKey("Name");
 
-                    b.ToTable("PokeTypes");
+                    b.ToTable("PokeTypes", (string)null);
                 });
 
             modelBuilder.Entity("VortiDex.Model.Pokedex", b =>
@@ -85,8 +79,6 @@ namespace VortiDex.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int>("TrainerId")
                         .HasColumnType("int");
@@ -96,7 +88,7 @@ namespace VortiDex.Migrations
                     b.HasIndex("TrainerId")
                         .IsUnique();
 
-                    b.ToTable("Pokedex");
+                    b.ToTable("Pokedex", (string)null);
                 });
 
             modelBuilder.Entity("VortiDex.Model.Pokemon", b =>
@@ -105,37 +97,35 @@ namespace VortiDex.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("longtext");
 
                     b.Property<double>("Height")
-                        .HasColumnType("float");
+                        .HasColumnType("double");
 
                     b.Property<bool>("IsCatch")
-                        .HasColumnType("bit");
+                        .HasColumnType("tinyint(1)");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("longtext");
 
                     b.Property<string>("Picture")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("longtext");
 
                     b.Property<int?>("PokedexId")
                         .HasColumnType("int");
 
                     b.Property<double>("Weight")
-                        .HasColumnType("float");
+                        .HasColumnType("double");
 
                     b.HasKey("Id");
 
                     b.HasIndex("PokedexId");
 
-                    b.ToTable("Pokemon");
+                    b.ToTable("Pokemon", (string)null);
                 });
 
             modelBuilder.Entity("VortiDex.Model.Skill", b =>
@@ -144,25 +134,23 @@ namespace VortiDex.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("longtext");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("longtext");
 
                     b.Property<string>("TypeName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("varchar(255)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("TypeName");
 
-                    b.ToTable("Skills");
+                    b.ToTable("Skills", (string)null);
                 });
 
             modelBuilder.Entity("VortiDex.Model.Squad", b =>
@@ -171,11 +159,9 @@ namespace VortiDex.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("longtext");
 
                     b.Property<int>("TrainerId")
                         .HasColumnType("int");
@@ -184,7 +170,7 @@ namespace VortiDex.Migrations
 
                     b.HasIndex("TrainerId");
 
-                    b.ToTable("Squads");
+                    b.ToTable("Squads", (string)null);
                 });
 
             modelBuilder.Entity("VortiDex.Model.Trainer", b =>
@@ -193,15 +179,13 @@ namespace VortiDex.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("longtext");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Trainers");
+                    b.ToTable("Trainers", (string)null);
                 });
 
             modelBuilder.Entity("PokeTypePokemon", b =>

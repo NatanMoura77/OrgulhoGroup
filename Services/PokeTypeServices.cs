@@ -28,7 +28,6 @@ public class PokeTypeServices
             .ToReadDtoWithRelations(pokeType);
 
         return readPokeType;
-
     }
 
     public ReadPokeTypeDtoWithRelations GetById(string pokeTypeId)

@@ -18,7 +18,8 @@ public class Program
             .GetConnectionString("DefaultConnection");
         
         builder
-            .Services.AddDbContext<PokeContext>(option => option.UseSqlServer(connString));
+            .Services.AddDbContext<PokeContext>(option => option
+            .UseMySql(connString, ServerVersion.AutoDetect(connString)));
 
         builder
             .Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());

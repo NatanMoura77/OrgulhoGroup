@@ -21,7 +21,8 @@ public class PokeTypeRepository
 
     public PokeType? FindById(string name)
     {
-       return _context.PokeTypes.FirstOrDefault(pokeType => pokeType.Name == name);
+       return _context.PokeTypes
+            .FirstOrDefault(pokeType => pokeType.Name == name);
     }
 
     public ICollection<PokeType> GetAllRep()
@@ -33,8 +34,9 @@ public class PokeTypeRepository
 
     public PokeType UpdateRep(PokeType pokeType)
     {
-        _context.PokeTypes.Update(pokeType);
-        _context.SaveChanges();
+        DeleteRep(pokeType);
+
+        CreateRep(pokeType);
 
         return (pokeType);
     }

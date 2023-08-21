@@ -25,15 +25,16 @@ public class SquadRepository
     {
         return _context.Squads
             .Include(squad => squad.Trainer)
+            .Include(squad => squad.Pokemons)
             .FirstOrDefault(squad => squad.Id == id);
     }
 
     public ICollection<Squad> GetAllRep()
     {
-       return _context
-            .Squads
-            .Include(squad => squad.Pokemons)
-            .ToList();
+        return _context
+             .Squads
+             .Include(squad => squad.Pokemons)
+             .ToList();
     }
 
     public Squad UpdateRep(Squad squad)
@@ -54,16 +55,38 @@ public class SquadRepository
 
     public bool Exists(int id)
     {
-       return _context.Squads.Any(squad => squad.Id == id);
+        return _context.Squads.Any(squad => squad.Id == id);
     }
 
     public Squad AddPokemonToSquad(Squad squad, int pokemonId)
     {
-        var pokemon = _context.Pokemon.FirstOrDefault(pokemon => pokemon.Id == pokemonId) ?? throw new PokemonNotFoundException();
+        var pokemon =
+            _context.Pokemon
+            .FirstOrDefault(pokemon => pokemon.Id == pokemonId) ??
+            throw new PokemonNotFoundException();
+
+        pokemon.IsCatch = true;
 
         squad.Pokemons.Add(pokemon);
 
         _context.SaveChanges();
+        return (squad);
+    }
+
+    public Squad DeletePokemonFromSquad(Squad squad, int pokemonId)
+    {
+        var pokemon =
+            _context.Pokemon
+            .FirstOrDefault(pokemon => pokemon.Id == pokemonId) ??
+            throw new PokemonNotFoundException();
+
+        if (!squad.Pokemons.Contains(pokemon))
+            throw new BadHttpRequestException("O pokemon não existe nessa equipe");
+
+        squad.Pokemons.Remove(pokemon);
+
+        _context.SaveChanges();
+
         return (squad);
     }
 }
