@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\gabri\\OrgulhoGroup\\VortiDex.csproj": {}
+    "D:\\Vortigo\\OrgulhoGroup\\VortiDex.csproj": {}
   },
   "projects": {
-    "C:\\Users\\gabri\\OrgulhoGroup\\VortiDex.csproj": {
+    "D:\\Vortigo\\OrgulhoGroup\\VortiDex.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\gabri\\OrgulhoGroup\\VortiDex.csproj",
+        "projectUniqueName": "D:\\Vortigo\\OrgulhoGroup\\VortiDex.csproj",
         "projectName": "VortiDex",
-        "projectPath": "C:\\Users\\gabri\\OrgulhoGroup\\VortiDex.csproj",
-        "packagesPath": "C:\\Users\\gabri\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\gabri\\OrgulhoGroup\\obj\\",
+        "projectPath": "D:\\Vortigo\\OrgulhoGroup\\VortiDex.csproj",
+        "packagesPath": "C:\\Users\\rodri\\.nuget\\packages\\",
+        "outputPath": "D:\\Vortigo\\OrgulhoGroup\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\gabri\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\rodri\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
