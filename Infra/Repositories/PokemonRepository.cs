@@ -44,7 +44,7 @@ public class PokemonRepository : IPokemonRepository
         var pokemon = 
             _context.Pokemon
             .Include(pokemon => pokemon.PokeTypes)
-            .ToArray()
+            .Include(pokemon => pokemon.Skills)
             .FirstOrDefault(pokemon => pokemon.Id == id);
 
         return

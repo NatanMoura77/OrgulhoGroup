@@ -87,6 +87,19 @@ public class SquadServices : ISquadService
         return;
     }
 
+    public ReadSquadDtoWithRelations DeletePokemonFromSquad(int squadId, int pokemonId)
+    {
+        var squad = _squadRep
+            .FindById(squadId) ?? throw new SquadNotFoundException();
+
+        _squadRep.DeletePokemonFromSquad(squad ,pokemonId);
+
+        var squadDto = _mapper
+            .ToReadDtoWithRelations(squad);
+
+        return squadDto;
+    }
+
     public ReadSquadDtoWithRelations AddPokemonToSquad(int squadId, int pokemonId)
     {
         var squad = _squadRep

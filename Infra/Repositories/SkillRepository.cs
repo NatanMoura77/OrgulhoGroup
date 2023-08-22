@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using VortiDex.Dtos.Responses.DtosPokeType;
 using VortiDex.Infra.Repositories.Interfaces;
+using VortiDex.Exceptions.NotFoundExceptions;
 using VortiDex.Model;
 
 namespace VortiDex.Infra.Repositories;
@@ -16,7 +17,9 @@ public class SkillRepository : ISkillRepository
 
     public Skill CreateRep(Skill skill)
     {
-        var pokeType = _context.PokeTypes.FirstOrDefault(pokeType => pokeType.Name == skill.Type.Name);
+        var pokeType = _context.PokeTypes
+            .FirstOrDefault(pokeType => pokeType.Name == skill.Type.Name) ?? 
+            throw new SkillNotFoundException();
 
         skill.Type = pokeType;
 

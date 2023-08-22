@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using VortiDex.Dtos.Request.DtosTrainer;
-using VortiDex.Exceptions.NotFoundExceptions;
+using VortiDex.Handlers;
 using VortiDex.Services;
 using VortiDex.Services.Interface;
 
@@ -32,9 +32,9 @@ namespace VortiDex.Controllers
                 var trainer = _trainerServ.ReadById(id);
                 return Ok(trainer);
             }
-            catch (NotFoundException exception)
+            catch (Exception exception)
             {
-                return NotFound(exception.Message);
+                return ControllerExceptionHandler.HandleException(exception);
             }
         }
 
@@ -65,12 +65,10 @@ namespace VortiDex.Controllers
 
                 return NoContent();
             }
-            catch(NotFoundException exception)
+            catch (Exception exception)
             {
-                return NotFound(exception.Message);
+                return ControllerExceptionHandler.HandleException(exception);
             }
-
-
         }
     }
 }

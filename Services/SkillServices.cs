@@ -25,7 +25,6 @@ public class SkillServices : ISkillService
         _skillRep
             .CreateRep(skill);
 
-
         var readSkill = _mapper
             .ToReadDtoWithRelations(skill);
 

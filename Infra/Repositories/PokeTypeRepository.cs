@@ -34,8 +34,9 @@ public class PokeTypeRepository : IPokeTypeRepository
 
     public PokeType UpdateRep(PokeType pokeType)
     {
-        _context.PokeTypes.Update(pokeType);
-        _context.SaveChanges();
+        DeleteRep(pokeType);
+
+        CreateRep(pokeType);
 
         return (pokeType);
     }

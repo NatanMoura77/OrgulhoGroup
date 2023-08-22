@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Vortigo\\OrgulhoGroup\\VortiDex.csproj": {}
+    "C:\\Users\\gabri\\OrgulhoGroup\\VortiDex.csproj": {}
   },
   "projects": {
-    "D:\\Vortigo\\OrgulhoGroup\\VortiDex.csproj": {
+    "C:\\Users\\gabri\\OrgulhoGroup\\VortiDex.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Vortigo\\OrgulhoGroup\\VortiDex.csproj",
+        "projectUniqueName": "C:\\Users\\gabri\\OrgulhoGroup\\VortiDex.csproj",
         "projectName": "VortiDex",
-        "projectPath": "D:\\Vortigo\\OrgulhoGroup\\VortiDex.csproj",
-        "packagesPath": "C:\\Users\\rodri\\.nuget\\packages\\",
-        "outputPath": "D:\\Vortigo\\OrgulhoGroup\\obj\\",
+        "projectPath": "C:\\Users\\gabri\\OrgulhoGroup\\VortiDex.csproj",
+        "packagesPath": "C:\\Users\\gabri\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\gabri\\OrgulhoGroup\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\rodri\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\gabri\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -62,6 +62,10 @@
               "suppressParent": "All",
               "target": "Package",
               "version": "[7.0.10, )"
+            },
+            "Pomelo.EntityFrameworkCore.MySql": {
+              "target": "Package",
+              "version": "[7.0.0, )"
             },
             "Swashbuckle.AspNetCore": {
               "target": "Package",

@@ -24,13 +24,15 @@ public class PokedexRepository : IPokedexRepository
 
     public Pokedex? FindById(int id)
     {
-       return _context.Pokedex.FirstOrDefault(pokedex => pokedex.Id == id);
+        return _context.Pokedex
+            .Include(pokedex => pokedex.Pokemons)
+            .Include(pokedex => pokedex.Trainer)
+            .FirstOrDefault(pokedex => pokedex.Id == id);
     }
 
     public ICollection<Pokedex> GetAllRep()
     {
-       return _context.Pokedex
-            .Include(pokedex => pokedex.Pokemons).ToList();
+       return _context.Pokedex.ToList();
     }
 
     public Pokedex UpdateRep(Pokedex pokedex)

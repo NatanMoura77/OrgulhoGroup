@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using VortiDex.Dtos.Request.DtosPokedex;
 using VortiDex.Exceptions.NotFoundExceptions;
+using VortiDex.Handlers;
 using VortiDex.Services;
 using VortiDex.Services.Interface;
 
@@ -34,9 +35,9 @@ public class PokedexController : ControllerBase
 
             return Ok(pokedex);
         }
-        catch (NotFoundException ex)
+        catch (Exception exception)
         {
-            return NotFound(ex.Message);
+            return ControllerExceptionHandler.HandleException(exception);
         }
 
     }
@@ -66,9 +67,9 @@ public class PokedexController : ControllerBase
 
             return NoContent();
         }
-        catch (NotFoundException exception)
+        catch (Exception exception)
         {
-            return NotFound(exception.Message);
+            return ControllerExceptionHandler.HandleException(exception);
         }
 
     }
@@ -82,9 +83,9 @@ public class PokedexController : ControllerBase
 
             return Ok(pokedex);
         }
-        catch (NotFoundException exception)
+        catch (Exception exception)
         {
-            return NotFound(exception.Message);
-        }      
+            return ControllerExceptionHandler.HandleException(exception);
+        }
     }
 }

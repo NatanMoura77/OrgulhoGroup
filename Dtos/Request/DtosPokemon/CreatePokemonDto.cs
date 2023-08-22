@@ -12,8 +12,6 @@ public class CreatePokemonDto
 
     public required double Weight { get; set; }
 
-    public required bool IsCatch { get; set; }
-
     public required string Picture { get; set; }
 
     public required ICollection<int> PokeTypesId { get; set; }

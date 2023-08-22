@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using VortiDex.Dtos.Request.DtosPokeType;
-using VortiDex.Dtos.Request.DtosTrainer;
-using VortiDex.Exceptions.NotFoundExceptions;
+using VortiDex.Handlers;
 using VortiDex.Services;
 using VortiDex.Services.Interface;
 
@@ -35,9 +34,9 @@ public class PokeTypeController : ControllerBase
 
             return Ok(pokeType);
         }
-        catch (NotFoundException exception)
+        catch (Exception exception)
         {
-            return NotFound(exception.Message);
+            return ControllerExceptionHandler.HandleException(exception);
         }
     }
 
@@ -62,13 +61,13 @@ public class PokeTypeController : ControllerBase
     {
         try
         {
-            _pokeTypeServ.Delete(id);
+            _pokeTypeServ.Delete(name);
 
             return NoContent();
         }
-        catch(NotFoundException exception)
+        catch (Exception exception)
         {
-            return NotFound(exception.Message);
+            return ControllerExceptionHandler.HandleException(exception);
         }
     }
 }
