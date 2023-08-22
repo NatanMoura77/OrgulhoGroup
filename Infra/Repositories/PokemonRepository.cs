@@ -1,10 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using VortiDex.Exceptions.NotFoundExceptions;
+using VortiDex.Infra.Repositories.Interfaces;
 using VortiDex.Model;
 
 namespace VortiDex.Infra.Repositories;
 
-public class PokemonRepository
+public class PokemonRepository : IPokemonRepository
 {
     private readonly PokeContext _context;
 
@@ -22,11 +23,11 @@ public class PokemonRepository
         //            select pokeType
         //            ).ToList();
 
-        foreach (string poketype in pokemon.PokeTypesId)
+        foreach (int poketype in pokemon.PokeTypesId)
         {
             pokeTypes =
                 _context.PokeTypes
-                .Where(pokeType => pokeType.Name == poketype)
+                .Where(pokeType => pokeType.Id == poketype)
                 .ToList();
         }
 

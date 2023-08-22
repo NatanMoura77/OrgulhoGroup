@@ -1,11 +1,12 @@
 ﻿using AutoMapper;
 using VortiDex.Dtos.Request.DtosSkill;
 using VortiDex.Dtos.Responses.DtosSkill;
+using VortiDex.Mapper.Interfaces;
 using VortiDex.Model;
 
 namespace VortiDex.Mapper.Implementations;
 
-public class SkillMapper
+public class SkillMapper : ISkillMapper
 {
     private readonly IMapper _mapper;
 

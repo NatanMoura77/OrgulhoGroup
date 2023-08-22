@@ -1,8 +1,11 @@
 using Microsoft.EntityFrameworkCore;
 using VortiDex.Infra;
 using VortiDex.Infra.Repositories;
+using VortiDex.Infra.Repositories.Interfaces;
 using VortiDex.Mapper.Implementations;
+using VortiDex.Mapper.Interfaces;
 using VortiDex.Services;
+using VortiDex.Services.Interface;
 
 namespace VortiDex;
 
@@ -23,29 +26,29 @@ public class Program
         builder
             .Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
-        builder.Services.AddScoped<TrainerServices>();
-        builder.Services.AddScoped<TrainerRepository>();
-        builder.Services.AddScoped<TrainerMapper>();
+        builder.Services.AddScoped<ITrainerService, TrainerServices>();
+        builder.Services.AddScoped<ITrainerRepository, TrainerRepository>();
+        builder.Services.AddScoped<ITrainerMapper, TrainerMapper>();
 
-        builder.Services.AddScoped<SquadServices>();
-        builder.Services.AddScoped<SquadRepository>();
-        builder.Services.AddScoped<SquadMapper>();
+        builder.Services.AddScoped<ISquadService, SquadServices>();
+        builder.Services.AddScoped<ISquadRepository, SquadRepository>();
+        builder.Services.AddScoped<ISquadMapper, SquadMapper>();
 
-        builder.Services.AddScoped<SkillServices>();
-        builder.Services.AddScoped<SkillRepository>();
-        builder.Services.AddScoped<SkillMapper>();
+        builder.Services.AddScoped<ISkillService, SkillServices>();
+        builder.Services.AddScoped<ISkillRepository, SkillRepository>();
+        builder.Services.AddScoped<ISkillMapper, SkillMapper>();
 
-        builder.Services.AddScoped<PokemonServices>();
-        builder.Services.AddScoped<PokemonRepository>();
-        builder.Services.AddScoped<PokemonMapper>();
+        builder.Services.AddScoped<IPokemonService, PokemonServices>();
+        builder.Services.AddScoped<IPokemonRepository, PokemonRepository>();
+        builder.Services.AddScoped<IPokemonMapper, PokemonMapper>();
 
-        builder.Services.AddScoped<PokeTypeServices>();
-        builder.Services.AddScoped<PokeTypeRepository>();
-        builder.Services.AddScoped<PokeTypeMapper>();
+        builder.Services.AddScoped<IPokeTypeService, PokeTypeServices>();
+        builder.Services.AddScoped<IPokeTypeRepository, PokeTypeRepository>();
+        builder.Services.AddScoped<IPokeTypeMapper, PokeTypeMapper>();
 
-        builder.Services.AddScoped<PokedexServices>();
-        builder.Services.AddScoped<PokedexRepository>();
-        builder.Services.AddScoped<PokedexMapper>();
+        builder.Services.AddScoped<IPokedexService, PokedexServices>();
+        builder.Services.AddScoped<IPokedexRepository, PokedexRepository>();
+        builder.Services.AddScoped<IPokedexMapper, PokedexMapper>();
 
         builder.Services.AddControllers();
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

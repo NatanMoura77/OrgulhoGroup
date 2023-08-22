@@ -2,6 +2,7 @@
 using VortiDex.Dtos.Request.DtosPokemon;
 using VortiDex.Exceptions.NotFoundExceptions;
 using VortiDex.Services;
+using VortiDex.Services.Interface;
 
 namespace VortiDex.Controllers
 {
@@ -9,9 +10,9 @@ namespace VortiDex.Controllers
     [ApiController]
     public class PokemonController : ControllerBase
     {
-        private readonly PokemonServices _pokemonServices;
+        private readonly IPokemonService _pokemonServices;
 
-        public PokemonController(PokemonServices pokeServices)
+        public PokemonController(IPokemonService pokeServices)
         {
             _pokemonServices = pokeServices;
         }
@@ -19,16 +20,16 @@ namespace VortiDex.Controllers
         [HttpGet]
         public IActionResult GetAll()
         {
-            var pokemon = _pokemonServices.GetAllServ();
+            var pokemon = _pokemonServices.ReadAll();
             return Ok(pokemon);
         }
 
         [HttpGet("{id}")]
-        public IActionResult GetById(int id)
+        public IActionResult ReadById(int id)
         {
             try
             {
-                var pokemon = _pokemonServices.GetById(id);
+                var pokemon = _pokemonServices.ReadById(id);
 
                 return Ok(pokemon);
             }
@@ -43,9 +44,9 @@ namespace VortiDex.Controllers
         {
             try
             {
-                var pokemon = _pokemonServices.CreateServ(dto);
+                var pokemon = _pokemonServices.Create(dto);
 
-                return CreatedAtAction(nameof(GetById), new { id = pokemon.Id }, pokemon);
+                return CreatedAtAction(nameof(ReadById), new { id = pokemon.Id }, pokemon);
             }
             catch (Exception exception)
             {
@@ -71,7 +72,7 @@ namespace VortiDex.Controllers
         [HttpPut("{id}")]
         public IActionResult Update(int id, [FromBody] UpdatePokemonDto dto)
         {
-            var pokemon = _pokemonServices.UpdateServ(id, dto);
+            var pokemon = _pokemonServices.Update(id, dto);
 
             return Ok(pokemon);
         }

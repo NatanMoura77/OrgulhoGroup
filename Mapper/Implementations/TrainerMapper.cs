@@ -1,11 +1,12 @@
 ﻿using AutoMapper;
 using VortiDex.Dtos.Request.DtosTrainer;
 using VortiDex.Dtos.Responses.DtosTrainer;
+using VortiDex.Mapper.Interfaces;
 using VortiDex.Model;
 
 namespace VortiDex.Mapper.Implementations;
 
-public class TrainerMapper
+public class TrainerMapper : ITrainerMapper
 {
     private readonly IMapper _mapper;
 

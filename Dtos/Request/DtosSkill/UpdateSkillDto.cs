@@ -8,5 +8,5 @@ public class UpdateSkillDto
 
     public required string Description { get; set; }
 
-    public required PokeType Type { get; set; }
+    public required int PokeTypeId { get; set; }
 }

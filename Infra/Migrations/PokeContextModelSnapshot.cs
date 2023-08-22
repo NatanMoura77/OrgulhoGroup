@@ -24,17 +24,17 @@ namespace VortiDex.Migrations
 
             modelBuilder.Entity("PokeTypePokemon", b =>
                 {
-                    b.Property<string>("PokeTypesName")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("PokeTypesId")
+                        .HasColumnType("int");
 
                     b.Property<int>("PokemonId")
                         .HasColumnType("int");
 
-                    b.HasKey("PokeTypesName", "PokemonId");
+                    b.HasKey("PokeTypesId", "PokemonId");
 
                     b.HasIndex("PokemonId");
 
-                    b.ToTable("PokeTypePokemon", (string)null);
+                    b.ToTable("PokeTypePokemon");
                 });
 
             modelBuilder.Entity("PokemonSkill", b =>
@@ -49,7 +49,7 @@ namespace VortiDex.Migrations
 
                     b.HasIndex("SkillsId");
 
-                    b.ToTable("PokemonSkill", (string)null);
+                    b.ToTable("PokemonSkill");
                 });
 
             modelBuilder.Entity("PokemonSquad", b =>
@@ -64,17 +64,24 @@ namespace VortiDex.Migrations
 
                     b.HasIndex("SquadsId");
 
-                    b.ToTable("PokemonSquad", (string)null);
+                    b.ToTable("PokemonSquad");
                 });
 
             modelBuilder.Entity("VortiDex.Model.PokeType", b =>
                 {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(450)");
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Name");
+                    b.HasKey("Id");
 
-                    b.ToTable("PokeTypes", (string)null);
+                    b.ToTable("PokeTypes");
                 });
 
             modelBuilder.Entity("VortiDex.Model.Pokedex", b =>
@@ -93,7 +100,7 @@ namespace VortiDex.Migrations
                     b.HasIndex("TrainerId")
                         .IsUnique();
 
-                    b.ToTable("Pokedex", (string)null);
+                    b.ToTable("Pokedex");
                 });
 
             modelBuilder.Entity("VortiDex.Model.Pokemon", b =>
@@ -132,7 +139,7 @@ namespace VortiDex.Migrations
 
                     b.HasIndex("PokedexId");
 
-                    b.ToTable("Pokemon", (string)null);
+                    b.ToTable("Pokemon");
                 });
 
             modelBuilder.Entity("VortiDex.Model.Skill", b =>
@@ -151,15 +158,14 @@ namespace VortiDex.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("TypeName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("TypeId")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("TypeName");
+                    b.HasIndex("TypeId");
 
-                    b.ToTable("Skills", (string)null);
+                    b.ToTable("Skills");
                 });
 
             modelBuilder.Entity("VortiDex.Model.Squad", b =>
@@ -181,7 +187,7 @@ namespace VortiDex.Migrations
 
                     b.HasIndex("TrainerId");
 
-                    b.ToTable("Squads", (string)null);
+                    b.ToTable("Squads");
                 });
 
             modelBuilder.Entity("VortiDex.Model.Trainer", b =>
@@ -198,14 +204,14 @@ namespace VortiDex.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Trainers", (string)null);
+                    b.ToTable("Trainers");
                 });
 
             modelBuilder.Entity("PokeTypePokemon", b =>
                 {
                     b.HasOne("VortiDex.Model.PokeType", null)
                         .WithMany()
-                        .HasForeignKey("PokeTypesName")
+                        .HasForeignKey("PokeTypesId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -268,7 +274,7 @@ namespace VortiDex.Migrations
                 {
                     b.HasOne("VortiDex.Model.PokeType", "Type")
                         .WithMany("Skills")
-                        .HasForeignKey("TypeName")
+                        .HasForeignKey("TypeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

@@ -1,22 +1,23 @@
 ﻿using VortiDex.Dtos.Request.DtosPokedex;
 using VortiDex.Dtos.Responses.DtosPokedex;
 using VortiDex.Exceptions.NotFoundExceptions;
-using VortiDex.Infra.Repositories;
-using VortiDex.Mapper.Implementations;
+using VortiDex.Infra.Repositories.Interfaces;
+using VortiDex.Mapper.Interfaces;
+using VortiDex.Services.Interface;
 
 namespace VortiDex.Services;
 
-public class PokedexServices
+public class PokedexServices : IPokedexService
 {
-    private readonly PokedexRepository _pokedexRep;
-    private readonly PokedexMapper _mapper;
-    public PokedexServices(PokedexRepository pokedexRep, PokedexMapper mapper)
+    private readonly IPokedexRepository _pokedexRep;
+    private readonly IPokedexMapper _mapper;
+    public PokedexServices(IPokedexRepository pokedexRep, IPokedexMapper mapper)
     {
         _pokedexRep = pokedexRep;
         _mapper = mapper;
     }
 
-    public ReadPokedexDtoWithRelations CreateServ(CreatePokedexDto createDto)
+    public ReadPokedexDtoWithRelations Create(CreatePokedexDto createDto)
     {
         var pokedex = _mapper
             .ToModel(createDto);
@@ -29,7 +30,7 @@ public class PokedexServices
         return dto;
     }
 
-    public ReadPokedexDtoWithRelations GetById(int pokedexId)
+    public ReadPokedexDtoWithRelations ReadById(int pokedexId)
     {
         var pokedex = _pokedexRep
             .FindById(pokedexId) ?? throw new PokedexNotFoundException();
@@ -40,7 +41,7 @@ public class PokedexServices
         return dto;
     }
 
-    public ICollection<ReadPokedexDto> GetAllServ()
+    public ICollection<ReadPokedexDto> ReadAll()
     {
         var pokedex = _pokedexRep
             .GetAllRep();
@@ -51,13 +52,13 @@ public class PokedexServices
         return dto;
     }
 
-    public ReadPokedexDtoWithRelations UpdateServ(int pokedexId, UpdatePokedexDto updateDto)
+    public ReadPokedexDtoWithRelations Update(int pokedexId, UpdatePokedexDto updateDto)
     {
         var pokedex = _pokedexRep.FindById(pokedexId);
 
         if (pokedex is null)
         {
-            return CreateServ(_mapper.ToCreateDto(updateDto));
+            return Create(_mapper.ToCreateDto(updateDto));
         }
         else
         {

@@ -1,11 +1,12 @@
 ﻿using AutoMapper;
 using VortiDex.Dtos.Request.DtosPokeType;
 using VortiDex.Dtos.Responses.DtosPokeType;
+using VortiDex.Mapper.Interfaces;
 using VortiDex.Model;
 
 namespace VortiDex.Mapper.Implementations;
 
-public class PokeTypeMapper
+public class PokeTypeMapper : IPokeTypeMapper
 {
     private readonly IMapper _mapper;
 

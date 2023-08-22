@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 
 namespace VortiDex.Model;
@@ -16,10 +17,11 @@ public class Skill
     public required string Description { get; set; }
 
     [Required]
-    [JsonIgnore]
     public PokeType Type { get; set; }
 
-    [JsonIgnore]
+    [NotMapped]
+    public int PokeTypeId { get; set; }
+
     public ICollection<Pokemon>? Pokemons { get; set; }
 
     public Skill()

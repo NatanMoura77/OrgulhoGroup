@@ -32,17 +32,17 @@ public class Pokemon
     public ICollection<PokeType> PokeTypes { get; set; }
 
     [NotMapped]
-    public ICollection<string> PokeTypesId { get; set; }
+    public ICollection<int> PokeTypesId { get; set; }
 
     public ICollection<Squad>? Squads { get; set; }
 
-    public ICollection<Skill> Skills { get; set; }
+    public ICollection<Skill>? Skills { get; set; }
 
     public Pokemon()
     {
         Squads = new List<Squad>();
         Skills = new List<Skill>();
         PokeTypes = new List<PokeType>();
-        PokeTypesId = new List<string>();
+        PokeTypesId = new List<int>();
     }
 }

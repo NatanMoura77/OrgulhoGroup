@@ -1,8 +1,9 @@
-﻿using VortiDex.Model;
+﻿using VortiDex.Infra.Repositories.Interfaces;
+using VortiDex.Model;
 
 namespace VortiDex.Infra.Repositories;
 
-public class PokeTypeRepository
+public class PokeTypeRepository : IPokeTypeRepository
 {
     private readonly PokeContext _context;
 
@@ -19,9 +20,9 @@ public class PokeTypeRepository
         return (pokeType);
     }
 
-    public PokeType? FindById(string name)
+    public PokeType? FindById(int id)
     {
-       return _context.PokeTypes.FirstOrDefault(pokeType => pokeType.Name == name);
+       return _context.PokeTypes.FirstOrDefault(pokeType => pokeType.Id == id);
     }
 
     public ICollection<PokeType> GetAllRep()
@@ -47,8 +48,8 @@ public class PokeTypeRepository
         return (pokeType);
     }
 
-    public bool Exists(string name)
+    public bool Exists(int id)
     {
-       return _context.PokeTypes.Any(pokeType => pokeType.Name == name);
+       return _context.PokeTypes.Any(pokeType => pokeType.Id == id);
     }
 }

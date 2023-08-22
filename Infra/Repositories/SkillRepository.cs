@@ -1,10 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using VortiDex.Dtos.Responses.DtosPokeType;
+using VortiDex.Infra.Repositories.Interfaces;
 using VortiDex.Model;
 
 namespace VortiDex.Infra.Repositories;
 
-public class SkillRepository
+public class SkillRepository : ISkillRepository
 {
     private readonly PokeContext _context;
 
@@ -33,8 +34,8 @@ public class SkillRepository
     }
 
     public ICollection<Skill> GetAllRep()
-    {
-       return _context
+    {           
+        return _context
             .Skills
             .Include(skill => skill.Type)
             .Include(skill => skill.Pokemons)

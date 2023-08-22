@@ -1,22 +1,23 @@
 ﻿using VortiDex.Dtos.Request.DtosTrainer;
 using VortiDex.Dtos.Responses.DtosTrainer;
 using VortiDex.Exceptions.NotFoundExceptions;
-using VortiDex.Infra.Repositories;
-using VortiDex.Mapper.Implementations;
+using VortiDex.Infra.Repositories.Interfaces;
+using VortiDex.Mapper.Interfaces;
+using VortiDex.Services.Interface;
 
 namespace VortiDex.Services;
 
-public class TrainerServices
+public class TrainerServices : ITrainerService
 {
-    private readonly TrainerRepository _trainerRep;
-    private readonly TrainerMapper _mapper;
-    public TrainerServices(TrainerRepository trainerRep, TrainerMapper mapper)
+    private readonly ITrainerRepository _trainerRep;
+    private readonly ITrainerMapper _mapper;
+    public TrainerServices(ITrainerRepository trainerRep, ITrainerMapper mapper)
     {
         _trainerRep = trainerRep;
         _mapper = mapper;
     }
 
-    public ReadTrainerDtoWithRelations CreateServ(CreateTrainerDto createDto)
+    public ReadTrainerDtoWithRelations Create(CreateTrainerDto createDto)
     {
         var trainer = _mapper
             .ToModel(createDto);
@@ -30,7 +31,7 @@ public class TrainerServices
         return readTrainer;
     }
 
-    public ReadTrainerDtoWithRelations GetById(int trainerId)
+    public ReadTrainerDtoWithRelations ReadById(int trainerId)
     {
         var trainer = _trainerRep
             .FindById(trainerId) ?? throw new TrainerNotFoundException();
@@ -42,7 +43,7 @@ public class TrainerServices
 
     }
 
-    public ICollection<ReadTrainerDto> GetAllServ()
+    public ICollection<ReadTrainerDto> ReadAll()
     {
         var trainer = _trainerRep
             .GetAllRep();
@@ -53,13 +54,13 @@ public class TrainerServices
         return dto;
     }
 
-    public ReadTrainerDtoWithRelations UpdateServ(int trainerId, UpdateTrainerDto updateDto)
+    public ReadTrainerDtoWithRelations Update(int trainerId, UpdateTrainerDto updateDto)
     {
         var trainer = _trainerRep
             .FindById(trainerId);
 
         if (trainer is null)
-            return CreateServ(
+            return Create(
                 _mapper
                     .ToCreateDto(updateDto)
             );

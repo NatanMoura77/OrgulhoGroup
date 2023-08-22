@@ -1,22 +1,23 @@
 ﻿using VortiDex.Dtos.Request.DtosSkill;
 using VortiDex.Dtos.Responses.DtosSkill;
 using VortiDex.Exceptions.NotFoundExceptions;
-using VortiDex.Infra.Repositories;
-using VortiDex.Mapper.Implementations;
+using VortiDex.Infra.Repositories.Interfaces;
+using VortiDex.Mapper.Interfaces;
+using VortiDex.Services.Interface;
 
 namespace VortiDex.Services;
 
-public class SkillServices
+public class SkillServices : ISkillService
 {
-    private readonly SkillRepository _skillRep;
-    private readonly SkillMapper _mapper;
-    public SkillServices(SkillRepository skillRep, SkillMapper mapper)
+    private readonly ISkillRepository _skillRep;
+    private readonly ISkillMapper _mapper;
+    public SkillServices(ISkillRepository skillRep, ISkillMapper mapper)
     {
         _skillRep = skillRep;
         _mapper = mapper;
     }
 
-    public ReadSkillDtoWithRelations CreateServ(CreateSkillDto createDto)
+    public ReadSkillDtoWithRelations Create(CreateSkillDto createDto)
     {
         var skill = _mapper
             .ToModel(createDto);
@@ -31,7 +32,7 @@ public class SkillServices
         return (readSkill);
     }
 
-    public ReadSkillDtoWithRelations GetById(int skillId)
+    public ReadSkillDtoWithRelations ReadById(int skillId)
     {
         var skill = _skillRep
             .FindById(skillId) ?? throw new SkillNotFoundException();
@@ -42,7 +43,7 @@ public class SkillServices
         return (dto);
     }
 
-    public ICollection<ReadSkillDto> GetAllServ()
+    public ICollection<ReadSkillDto> ReadAll()
     {
         var skill = _skillRep
             .GetAllRep();
@@ -53,13 +54,13 @@ public class SkillServices
         return dto;
     }
 
-    public ReadSkillDtoWithRelations UpdateServ(int skillId, UpdateSkillDto updateDto)
+    public ReadSkillDtoWithRelations Update(int skillId, UpdateSkillDto updateDto)
     {
         var skill = _skillRep
             .FindById(skillId);
 
         if (skill is null)
-            return CreateServ(
+            return Create(
                 _mapper
                     .ToCreateDto(updateDto)
             );

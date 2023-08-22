@@ -1,22 +1,23 @@
 ﻿using VortiDex.Dtos.Request.DtosPokemon;
 using VortiDex.Dtos.Responses.DtosPokemon;
 using VortiDex.Exceptions.NotFoundExceptions;
-using VortiDex.Infra.Repositories;
-using VortiDex.Mapper.Implementations;
+using VortiDex.Infra.Repositories.Interfaces;
+using VortiDex.Mapper.Interfaces;
+using VortiDex.Services.Interface;
 
 namespace VortiDex.Services;
 
-public class PokemonServices
+public class PokemonServices : IPokemonService
 {
-    private readonly PokemonRepository _pokemonRep;
-    private readonly PokemonMapper _mapper;
-    public PokemonServices(PokemonRepository pokemonRep, PokemonMapper mapper)
+    private readonly IPokemonRepository _pokemonRep;
+    private readonly IPokemonMapper _mapper;
+    public PokemonServices(IPokemonRepository pokemonRep, IPokemonMapper mapper)
     {
         _pokemonRep = pokemonRep;
         _mapper = mapper;
     }
 
-    public ReadPokemonDtoWithRelations CreateServ(CreatePokemonDto createDto)
+    public ReadPokemonDtoWithRelations Create(CreatePokemonDto createDto)
     {
         var pokemon = _mapper
             .ToModel(createDto);
@@ -35,7 +36,7 @@ public class PokemonServices
         return readPokemon;
     }
 
-    public ReadPokemonDtoWithRelations GetById(int pokemonId)
+    public ReadPokemonDtoWithRelations ReadById(int pokemonId)
     {
         var pokemon = _pokemonRep
             .FindById(pokemonId) ?? throw new PokemonNotFoundException();
@@ -46,7 +47,7 @@ public class PokemonServices
         return dto;
     }
 
-    public ICollection<ReadPokemonDto> GetAllServ()
+    public ICollection<ReadPokemonDto> ReadAll()
     {
         var pokemon = _pokemonRep
             .GetAllRep();
@@ -57,13 +58,13 @@ public class PokemonServices
         return dto;
     }
 
-    public ReadPokemonDtoWithRelations UpdateServ(int pokemonId, UpdatePokemonDto updateDto)
+    public ReadPokemonDtoWithRelations Update(int pokemonId, UpdatePokemonDto updateDto)
     {
         var pokemon = _pokemonRep.FindById(pokemonId);
 
         if (pokemon is null)
         {
-            return CreateServ(_mapper.ToCreateDto(updateDto));
+            return Create(_mapper.ToCreateDto(updateDto));
         }
         else
         {

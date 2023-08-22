@@ -1,10 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using VortiDex.Exceptions.NotFoundExceptions;
+using VortiDex.Infra.Repositories.Interfaces;
 using VortiDex.Model;
 
 namespace VortiDex.Infra.Repositories;
 
-public class SquadRepository
+public class SquadRepository : ISquadRepository
 {
     private readonly PokeContext _context;
 

@@ -1,22 +1,23 @@
 ﻿using VortiDex.Dtos.Request.DtosPokeType;
 using VortiDex.Dtos.Responses.DtosPokeType;
 using VortiDex.Exceptions.NotFoundExceptions;
-using VortiDex.Infra.Repositories;
-using VortiDex.Mapper.Implementations;
+using VortiDex.Infra.Repositories.Interfaces;
+using VortiDex.Mapper.Interfaces;
+using VortiDex.Services.Interface;
 
 namespace VortiDex.Services;
 
-public class PokeTypeServices
+public class PokeTypeServices : IPokeTypeService
 {
-    private readonly PokeTypeRepository _pokeTypeRep;
-    private readonly PokeTypeMapper _mapper;
-    public PokeTypeServices(PokeTypeRepository pokeTypeRep, PokeTypeMapper mapper)
+    private readonly IPokeTypeRepository _pokeTypeRep;
+    private readonly IPokeTypeMapper _mapper;
+    public PokeTypeServices(IPokeTypeRepository pokeTypeRep, IPokeTypeMapper mapper)
     {
         _pokeTypeRep = pokeTypeRep;
         _mapper = mapper;
     }
 
-    public ReadPokeTypeDtoWithRelations CreateServ(CreatePokeTypeDto createDto)
+    public ReadPokeTypeDtoWithRelations Create(CreatePokeTypeDto createDto)
     {
         var pokeType = _mapper
             .ToModel(createDto);
@@ -31,7 +32,7 @@ public class PokeTypeServices
 
     }
 
-    public ReadPokeTypeDtoWithRelations GetById(string pokeTypeId)
+    public ReadPokeTypeDtoWithRelations ReadById(int pokeTypeId)
     {
         var pokeType = _pokeTypeRep
             .FindById(pokeTypeId) ?? throw new PokeTypeNotFoundException();
@@ -42,7 +43,7 @@ public class PokeTypeServices
         return dto;
     }
 
-    public ICollection<ReadPokeTypeDto> GetAllServ()
+    public ICollection<ReadPokeTypeDto> ReadAll()
     {
         var pokeType = _pokeTypeRep
             .GetAllRep();
@@ -53,13 +54,13 @@ public class PokeTypeServices
         return dto;
     }
 
-    public ReadPokeTypeDtoWithRelations UpdateServ(string pokeTypeId, UpdatePokeTypeDto updateDto)
+    public ReadPokeTypeDtoWithRelations Update(int pokeTypeId, UpdatePokeTypeDto updateDto)
     {
         var pokeType = _pokeTypeRep.FindById(pokeTypeId);
 
         if (pokeType is null)
         {
-            return CreateServ(_mapper.ToCreateDto(updateDto));
+            return Create(_mapper.ToCreateDto(updateDto));
         }
         else
         {
@@ -70,7 +71,7 @@ public class PokeTypeServices
         }
     }
 
-    public void Delete(string pokeTypeId)
+    public void Delete(int pokeTypeId)
     {
         var pokeType = _pokeTypeRep
            .FindById(pokeTypeId) ?? throw new PokeTypeNotFoundException();

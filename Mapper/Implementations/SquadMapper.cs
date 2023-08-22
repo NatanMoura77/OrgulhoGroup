@@ -1,11 +1,12 @@
 ﻿using AutoMapper;
 using VortiDex.Dtos.Request.DtosSquad;
 using VortiDex.Dtos.Responses.DtosSquad;
+using VortiDex.Mapper.Interfaces;
 using VortiDex.Model;
 
 namespace VortiDex.Mapper.Implementations;
 
-public class SquadMapper
+public class SquadMapper : ISquadMapper
 {
     private readonly IMapper _mapper;
 

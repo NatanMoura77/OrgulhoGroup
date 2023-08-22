@@ -2,6 +2,7 @@
 using VortiDex.Dtos.Request.DtosSquad;
 using VortiDex.Exceptions.NotFoundExceptions;
 using VortiDex.Services;
+using VortiDex.Services.Interface;
 
 namespace VortiDex.Controllers
 {
@@ -9,9 +10,9 @@ namespace VortiDex.Controllers
     [ApiController]
     public class SquadController : ControllerBase
     {
-        private readonly SquadServices _squadServ;
+        private readonly ISquadService _squadServ;
 
-        public SquadController(SquadServices squadServ)
+        public SquadController(ISquadService squadServ)
         {
             _squadServ = squadServ;
         }
@@ -19,16 +20,16 @@ namespace VortiDex.Controllers
         [HttpGet]
         public IActionResult GetAll()
         {
-            var squad = _squadServ.GetAllServ();
+            var squad = _squadServ.ReadAll();
             return Ok(squad);
         }
 
         [HttpGet("{id}")]
-        public IActionResult GetById(int id)
+        public IActionResult ReadById(int id)
         {
             try
             {
-                var squad = _squadServ.GetById(id);
+                var squad = _squadServ.ReadById(id);
                 return Ok(squad);
             }
             catch (NotFoundException exception)
@@ -40,16 +41,16 @@ namespace VortiDex.Controllers
         [HttpPost]
         public IActionResult Create([FromBody] CreateSquadDto dto)
         {
-            var squad = _squadServ.CreateServ(dto);
+            var squad = _squadServ.Create(dto);
 
-            return CreatedAtAction(nameof(GetById), new { id = squad.Id }, squad);
+            return CreatedAtAction(nameof(ReadById), new { id = squad.Id }, squad);
         }
 
         [HttpPut("{id}")]
         public IActionResult Update(int id, [FromBody] UpdateSquadDto dto)
         {
             var squad = _squadServ
-               .UpdateServ(id, dto);
+               .Update(id, dto);
 
             return Ok(squad);
         }

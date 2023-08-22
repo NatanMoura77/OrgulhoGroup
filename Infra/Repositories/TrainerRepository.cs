@@ -1,9 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using VortiDex.Infra.Repositories.Interfaces;
 using VortiDex.Model;
 
 namespace VortiDex.Infra.Repositories;
 
-public class TrainerRepository
+public class TrainerRepository : ITrainerRepository
 {
     private readonly PokeContext _context;
     public TrainerRepository(PokeContext context)

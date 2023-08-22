@@ -2,6 +2,7 @@
 using VortiDex.Dtos.Request.DtosPokedex;
 using VortiDex.Exceptions.NotFoundExceptions;
 using VortiDex.Services;
+using VortiDex.Services.Interface;
 
 namespace VortiDex.Controllers;
 
@@ -9,9 +10,9 @@ namespace VortiDex.Controllers;
 [Route("api/[controller]")]
 public class PokedexController : ControllerBase
 {
-    private readonly PokedexServices _pokedexServices;
+    private readonly IPokedexService _pokedexServices;
 
-    public PokedexController(PokedexServices pokedexServices)
+    public PokedexController(IPokedexService pokedexServices)
     {
         _pokedexServices = pokedexServices;
     }
@@ -19,17 +20,17 @@ public class PokedexController : ControllerBase
     [HttpGet]
     public IActionResult GetAll()
     {
-        var pokedex = _pokedexServices.GetAllServ();
+        var pokedex = _pokedexServices.ReadAll();
 
         return Ok(pokedex);
     }
 
     [HttpGet("{id}")]
-    public IActionResult GetById(int id)
+    public IActionResult ReadById(int id)
     {
         try
         {
-            var pokedex = _pokedexServices.GetById(id);
+            var pokedex = _pokedexServices.ReadById(id);
 
             return Ok(pokedex);
         }
@@ -43,15 +44,15 @@ public class PokedexController : ControllerBase
     [HttpPost]
     public IActionResult Create([FromBody] CreatePokedexDto dto)
     {
-        var pokedex = _pokedexServices.CreateServ(dto);
+        var pokedex = _pokedexServices.Create(dto);
 
-        return CreatedAtAction(nameof(GetById), new { id = pokedex.Id }, pokedex);
+        return CreatedAtAction(nameof(ReadById), new { id = pokedex.Id }, pokedex);
     }
 
     [HttpPut("{id}")]
     public IActionResult Update(int id, [FromBody] UpdatePokedexDto dto)
     {
-        var pokedex = _pokedexServices.UpdateServ(id, dto);
+        var pokedex = _pokedexServices.Update(id, dto);
 
         return Ok(pokedex);
     }

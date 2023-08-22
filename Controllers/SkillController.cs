@@ -2,6 +2,7 @@
 using VortiDex.Dtos.Request.DtosSkill;
 using VortiDex.Exceptions.NotFoundExceptions;
 using VortiDex.Services;
+using VortiDex.Services.Interface;
 
 namespace VortiDex.Controllers
 {
@@ -9,9 +10,9 @@ namespace VortiDex.Controllers
     [ApiController]
     public class SkillController : ControllerBase
     {
-        private readonly SkillServices _skillServ;
+        private readonly ISkillService _skillServ;
 
-        public SkillController(SkillServices skillServ)
+        public SkillController(ISkillService skillServ)
         {
             _skillServ = skillServ;
         }
@@ -19,16 +20,16 @@ namespace VortiDex.Controllers
         [HttpGet]
         public IActionResult GetAll()
         {
-            var skill = _skillServ.GetAllServ();
+            var skill = _skillServ.ReadAll();
             return Ok(skill);
         }
 
         [HttpGet("{id}")]
-        public IActionResult GetById(int id)
+        public IActionResult ReadById(int id)
         {
             try
             {
-                var skill = _skillServ.GetById(id);
+                var skill = _skillServ.ReadById(id);
 
                 return Ok(skill);
             }
@@ -41,16 +42,16 @@ namespace VortiDex.Controllers
         [HttpPost]
         public IActionResult Create([FromBody] CreateSkillDto dto)
         {
-            var skill = _skillServ.CreateServ(dto);
+            var skill = _skillServ.Create(dto);
 
-            return CreatedAtAction(nameof(GetById), new { id = skill.Id }, skill);
+            return CreatedAtAction(nameof(ReadById), new { id = skill.Id }, skill);
         }
 
         [HttpPut("{id}")]
         public IActionResult Update(int id, [FromBody] UpdateSkillDto dto)
         {
             var skill = _skillServ
-               .UpdateServ(id, dto);
+               .Update(id, dto);
 
             return Ok(skill);
         }

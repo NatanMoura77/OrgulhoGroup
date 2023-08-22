@@ -2,6 +2,7 @@
 using VortiDex.Dtos.Request.DtosTrainer;
 using VortiDex.Exceptions.NotFoundExceptions;
 using VortiDex.Services;
+using VortiDex.Services.Interface;
 
 namespace VortiDex.Controllers
 {
@@ -9,9 +10,9 @@ namespace VortiDex.Controllers
     [ApiController]
     public class TrainerController : ControllerBase
     {
-        private readonly TrainerServices _trainerServ;
+        private readonly ITrainerService _trainerServ;
 
-        public TrainerController(TrainerServices trainerServ)
+        public TrainerController(ITrainerService trainerServ)
         {
             _trainerServ = trainerServ;
         }
@@ -19,16 +20,16 @@ namespace VortiDex.Controllers
         [HttpGet]
         public IActionResult GetAll()
         {
-            var trainer = _trainerServ.GetAllServ();
+            var trainer = _trainerServ.ReadAll();
             return Ok(trainer);
         }
 
         [HttpGet("{id}")]
-        public IActionResult GetById(int id)
+        public IActionResult ReadById(int id)
         {
             try
             {
-                var trainer = _trainerServ.GetById(id);
+                var trainer = _trainerServ.ReadById(id);
                 return Ok(trainer);
             }
             catch (NotFoundException exception)
@@ -40,9 +41,9 @@ namespace VortiDex.Controllers
         [HttpPost]
         public IActionResult Create([FromBody] CreateTrainerDto dto)
         {
-            var trainer = _trainerServ.CreateServ(dto);
+            var trainer = _trainerServ.Create(dto);
 
-            return CreatedAtAction(nameof(GetById), new { id = trainer.Id }, trainer);
+            return CreatedAtAction(nameof(ReadById), new { id = trainer.Id }, trainer);
         }
 
         [HttpPut("{id}")]
@@ -50,7 +51,7 @@ namespace VortiDex.Controllers
         {
             var trainer =
                 _trainerServ
-                .UpdateServ(id, dto);
+                .Update(id, dto);
 
             return Ok(trainer);
         }
