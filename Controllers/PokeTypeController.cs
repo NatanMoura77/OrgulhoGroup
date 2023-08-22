@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using VortiDex.Dtos.Request.DtosPokeType;
 using VortiDex.Handlers;
-using VortiDex.Services;
 using VortiDex.Services.Interface;
 
 namespace VortiDex.Controllers;
@@ -61,7 +60,7 @@ public class PokeTypeController : ControllerBase
     {
         try
         {
-            _pokeTypeServ.Delete(name);
+            _pokeTypeServ.Delete(id);
 
             return NoContent();
         }

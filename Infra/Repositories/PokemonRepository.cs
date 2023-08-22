@@ -18,11 +18,6 @@ public class PokemonRepository : IPokemonRepository
     {
         var pokeTypes = new List<PokeType>();
 
-        //pokeTypes = (from pokeType in _context.PokeTypes
-        //            where pokemon.PokeTypes.Contains(pokeType)
-        //            select pokeType
-        //            ).ToList();
-
         foreach (int poketype in pokemon.PokeTypesId)
         {
             pokeTypes =

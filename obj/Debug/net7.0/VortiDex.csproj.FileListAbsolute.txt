@@ -279,3 +279,5 @@ C:\Users\gabri\OrgulhoGroup\obj\Debug\net7.0\VortiDex.genruntimeconfig.cache
 C:\Users\gabri\OrgulhoGroup\obj\Debug\net7.0\ref\VortiDex.dll
 C:\Users\gabri\OrgulhoGroup\bin\Debug\net7.0\MySqlConnector.dll
 C:\Users\gabri\OrgulhoGroup\bin\Debug\net7.0\Pomelo.EntityFrameworkCore.MySql.dll
+D:\Vortigo\OrgulhoGroup\bin\Debug\net7.0\MySqlConnector.dll
+D:\Vortigo\OrgulhoGroup\bin\Debug\net7.0\Pomelo.EntityFrameworkCore.MySql.dll

@@ -18,7 +18,7 @@ public class SkillRepository : ISkillRepository
     public Skill CreateRep(Skill skill)
     {
         var pokeType = _context.PokeTypes
-            .FirstOrDefault(pokeType => pokeType.Name == skill.Type.Name) ?? 
+            .FirstOrDefault(pokeType => pokeType.Id == skill.PokeTypeId) ?? 
             throw new SkillNotFoundException();
 
         skill.Type = pokeType;
