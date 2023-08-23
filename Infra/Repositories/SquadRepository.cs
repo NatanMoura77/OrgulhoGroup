@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using VortiDex.Exceptions.BadRequestExceptions;
 using VortiDex.Exceptions.NotFoundExceptions;
 using VortiDex.Infra.Repositories.Interfaces;
 using VortiDex.Model;
@@ -16,6 +17,11 @@ public class SquadRepository : ISquadRepository
 
     public Squad CreateRep(Squad squad)
     {
+        if (Exists(squad))
+        {
+            throw new BadRequestException("Essa equipe já existe!");
+        }
+
         _context.Squads.Add(squad);
         _context.SaveChanges();
 
@@ -54,9 +60,14 @@ public class SquadRepository : ISquadRepository
         return (squad);
     }
 
-    public bool Exists(int id)
+    public bool Exists(Squad squad)
     {
-        return _context.Squads.Any(squad => squad.Id == id);
+        return _context.Squads.Any(squadDb => squadDb.Name == squad.Name);
+    }
+
+    public bool ExistsPokemonInSquad(Squad squad, Pokemon pokemon)
+    {
+        return squad.Pokemons.Contains(pokemon);
     }
 
     public Squad AddPokemonToSquad(Squad squad, int pokemonId)
@@ -65,6 +76,11 @@ public class SquadRepository : ISquadRepository
             _context.Pokemon
             .FirstOrDefault(pokemon => pokemon.Id == pokemonId) ??
             throw new PokemonNotFoundException();
+
+        if (ExistsPokemonInSquad(squad, pokemon))
+        {
+            throw new BadRequestException("O pokemon já está na equipe!");
+        }
 
         pokemon.IsCatch = true;
 
@@ -82,7 +98,7 @@ public class SquadRepository : ISquadRepository
             throw new PokemonNotFoundException();
 
         if (!squad.Pokemons.Contains(pokemon))
-            throw new BadHttpRequestException("O pokemon não existe nessa equipe");
+            throw new BadRequestException("O pokemon não existe nessa equipe");
 
         squad.Pokemons.Remove(pokemon);
 

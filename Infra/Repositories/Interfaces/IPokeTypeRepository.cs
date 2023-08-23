@@ -4,4 +4,5 @@ namespace VortiDex.Infra.Repositories.Interfaces;
 
 public interface IPokeTypeRepository : IRepository<PokeType>
 {
+    bool Exists(PokeType pokeType);
 }

@@ -3,6 +3,7 @@ using VortiDex.Dtos.Responses.DtosPokeType;
 using VortiDex.Infra.Repositories.Interfaces;
 using VortiDex.Exceptions.NotFoundExceptions;
 using VortiDex.Model;
+using VortiDex.Exceptions.BadRequestExceptions;
 
 namespace VortiDex.Infra.Repositories;
 
@@ -18,10 +19,15 @@ public class SkillRepository : ISkillRepository
     public Skill CreateRep(Skill skill)
     {
         var pokeType = _context.PokeTypes
-            .FirstOrDefault(pokeType => pokeType.Id == skill.PokeTypeId) ?? 
+            .FirstOrDefault(pokeType => pokeType.Id == skill.PokeTypeId) ??
             throw new SkillNotFoundException();
 
         skill.Type = pokeType;
+
+        if (Exists(skill))
+        {
+            throw new BadRequestException("Essa habilidade já existe!");
+        }
 
         _context.Skills.Add(skill);
         _context.SaveChanges();
@@ -31,13 +37,13 @@ public class SkillRepository : ISkillRepository
 
     public Skill? FindById(int id)
     {
-       return _context.Skills
-            .Include(skill =>  skill.Type)
-            .FirstOrDefault(skill => skill.Id == id);
+        return _context.Skills
+             .Include(skill => skill.Type)
+             .FirstOrDefault(skill => skill.Id == id);
     }
 
     public ICollection<Skill> GetAllRep()
-    {           
+    {
         return _context
             .Skills
             .Include(skill => skill.Type)
@@ -48,6 +54,12 @@ public class SkillRepository : ISkillRepository
 
     public Skill UpdateRep(Skill skill)
     {
+        var pokeType = _context.PokeTypes
+             .FirstOrDefault(pokeType => pokeType.Id == skill.PokeTypeId) ??
+               throw new SkillNotFoundException();
+
+        skill.Type = pokeType;
+
         _context.Skills.Update(skill);
         _context.SaveChanges();
 
@@ -62,8 +74,10 @@ public class SkillRepository : ISkillRepository
         return (skill);
     }
 
-    public bool Exists(int id)
+    public bool Exists(Skill skill)
     {
-        return _context.Skills.Any(skill => skill.Id == id);
+        var skills = _context.Skills;
+
+        return skills.Any(skillsDb => skillsDb.Name == skill.Name);
     }
 }

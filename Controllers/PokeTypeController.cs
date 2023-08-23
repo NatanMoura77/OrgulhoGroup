@@ -42,17 +42,31 @@ public class PokeTypeController : ControllerBase
     [HttpPost]
     public IActionResult Create([FromBody] CreatePokeTypeDto dto)
     {
-        var pokeType = _pokeTypeServ.Create(dto);
+        try
+        {
+            var pokeType = _pokeTypeServ.Create(dto);
 
-        return CreatedAtAction(nameof(ReadById), new { id = pokeType.Name }, pokeType);
+            return CreatedAtAction(nameof(ReadById), new { id = pokeType.Name }, pokeType);
+        }
+        catch (Exception exception)
+        {
+            return ControllerExceptionHandler.HandleException(exception);
+        }
     }
 
     [HttpPut("{id}")]
     public IActionResult Update(int id, [FromBody] UpdatePokeTypeDto dto)
     {
-        var pokeType = _pokeTypeServ.Update(id, dto);
+        try
+        {
+            var pokeType = _pokeTypeServ.Update(id, dto);
 
-        return Ok(pokeType);
+            return Ok(pokeType);
+        }
+        catch (Exception exception)
+        {
+            return ControllerExceptionHandler.HandleException(exception);
+        }
     }
 
     [HttpDelete("{id}")]

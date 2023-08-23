@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using VortiDex.Dtos.Request.DtosSkill;
 using VortiDex.Handlers;
-using VortiDex.Services;
 using VortiDex.Services.Interface;
 
 namespace VortiDex.Controllers
@@ -42,18 +41,33 @@ namespace VortiDex.Controllers
         [HttpPost]
         public IActionResult Create([FromBody] CreateSkillDto dto)
         {
-            var skill = _skillServ.Create(dto);
+            try
+            {
+                var skill = _skillServ.Create(dto);
 
-            return CreatedAtAction(nameof(ReadById), new { id = skill.Id }, skill);
+                return CreatedAtAction(nameof(ReadById), new { id = skill.Id }, skill);
+            }
+            catch (Exception exception)
+            {
+                return ControllerExceptionHandler.HandleException(exception);
+            }
         }
 
         [HttpPut("{id}")]
         public IActionResult Update(int id, [FromBody] UpdateSkillDto dto)
         {
-            var skill = _skillServ
-               .Update(id, dto);
+            try
+            {
+                var skill = _skillServ
+                   .Update(id, dto);
 
-            return Ok(skill);
+                return Ok(skill);
+
+            }
+            catch (Exception exception)
+            {
+                return ControllerExceptionHandler.HandleException(exception);
+            }
         }
 
         [HttpDelete("{id}")]

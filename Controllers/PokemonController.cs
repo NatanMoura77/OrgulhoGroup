@@ -72,9 +72,17 @@ namespace VortiDex.Controllers
         [HttpPut("{id}")]
         public IActionResult Update(int id, [FromBody] UpdatePokemonDto dto)
         {
-            var pokemon = _pokemonServices.Update(id, dto);
+            try
+            {
+                var pokemon = _pokemonServices.Update(id, dto);
 
-            return Ok(pokemon);
+                return Ok(pokemon);
+            }
+            catch (Exception exception)
+            {
+                return ControllerExceptionHandler.HandleException(exception);
+            }
+
         }
 
         [HttpDelete("{id}")]

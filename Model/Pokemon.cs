@@ -10,10 +10,12 @@ public class Pokemon
     [Required]
     public required int Id { get; set; }
 
-    [Required] 
+    [Required]
+    [StringLength(50, ErrorMessage ="Esse campo só suporta até 50 caracteres!")]
     public required string Name { get; set; }
 
     [Required]
+    [StringLength(500, ErrorMessage = "Esse campo só suporta até 500 caracteres!")]
     public required string Description { get; set; }
 
     [Required]

@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using VortiDex.Exceptions.BadRequestExceptions;
 using VortiDex.Exceptions.NotFoundExceptions;
 using VortiDex.Infra.Repositories.Interfaces;
 using VortiDex.Model;
@@ -20,10 +22,16 @@ public class PokemonRepository : IPokemonRepository
 
         foreach (int poketype in pokemon.PokeTypesId)
         {
-            pokeTypes =
-                _context.PokeTypes
-                .Where(pokeType => pokeType.Id == poketype)
-                .ToList();
+            var pokeType = _context.PokeTypes.FirstOrDefault(pokeType => pokeType.Id == poketype)
+                ?? throw new PokeTypeNotFoundException();
+
+            pokeTypes.Add(pokeType);
+          
+        }
+
+        if (Exists(pokemon))
+        {
+            throw new BadRequestException("Esse pokemon já existe!");
         }
 
         pokemon.PokeTypes = pokeTypes;
@@ -36,21 +44,15 @@ public class PokemonRepository : IPokemonRepository
 
     public Pokemon? FindById(int id)
     {
-        var pokemon = 
+        return
             _context.Pokemon
             .Include(pokemon => pokemon.PokeTypes)
             .Include(pokemon => pokemon.Skills)
             .FirstOrDefault(pokemon => pokemon.Id == id);
-
-        return
-             _context.Pokemon
-             .FirstOrDefault(pokemon => pokemon.Id == id);
     }
 
     public ICollection<Pokemon> GetAllRep()
     {
-        var pokemon = _context.Pokemon.ToList();
-
         return _context.Pokemon
             .Include(pokemon => pokemon.Skills)
             .Include(pokemon => pokemon.PokeTypes)
@@ -59,6 +61,18 @@ public class PokemonRepository : IPokemonRepository
 
     public Pokemon UpdateRep(Pokemon pokemon)
     {
+        var pokeTypes = new List<PokeType>();
+
+        foreach (int poketype in pokemon.PokeTypesId)
+        {
+            var pokeType = _context.PokeTypes.FirstOrDefault(pokeType => pokeType.Id == poketype)
+                ?? throw new PokeTypeNotFoundException();
+
+            pokeTypes.Add(pokeType);
+        }
+
+        pokemon.PokeTypes = pokeTypes;
+
         _context.Pokemon.Update(pokemon);
         _context.SaveChanges();
 
@@ -73,14 +87,15 @@ public class PokemonRepository : IPokemonRepository
         return (pokemon);
     }
 
-    public bool Exists(int id)
+    public bool Exists(Pokemon pokemon)
     {
-        return _context.Pokemon.Any(pokemon => pokemon.Id == id);
+        return _context.Pokemon.Any(pokemonDb => pokemonDb.Name == pokemon.Name);
     }
 
     public Pokemon LearnMoveRep(Pokemon pokemon, int skillId)
     {
-        var skill = _context.Skills.FirstOrDefault(skill => skill.Id == skillId) ?? throw new SkillNotFoundException();
+        var skill = _context.Skills.FirstOrDefault(skill => skill.Id == skillId)
+            ?? throw new SkillNotFoundException();
 
         pokemon.Skills.Add(skill);
 

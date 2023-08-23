@@ -45,17 +45,32 @@ public class PokedexController : ControllerBase
     [HttpPost]
     public IActionResult Create([FromBody] CreatePokedexDto dto)
     {
-        var pokedex = _pokedexServices.Create(dto);
+        try
+        {
+            var pokedex = _pokedexServices.Create(dto);
 
-        return CreatedAtAction(nameof(ReadById), new { id = pokedex.Id }, pokedex);
+            return CreatedAtAction(nameof(ReadById), new { id = pokedex.Id }, pokedex);
+        }
+        catch (Exception exception)
+        {
+            return ControllerExceptionHandler.HandleException(exception);
+        }
     }
 
     [HttpPut("{id}")]
     public IActionResult Update(int id, [FromBody] UpdatePokedexDto dto)
     {
-        var pokedex = _pokedexServices.Update(id, dto);
+        try
+        {
+            var pokedex = _pokedexServices.Update(id, dto);
 
-        return Ok(pokedex);
+            return Ok(pokedex);
+
+        }
+        catch (Exception exception)
+        {
+            return ControllerExceptionHandler.HandleException(exception);
+        }
     }
 
     [HttpDelete("{id}")]

@@ -41,18 +41,32 @@ namespace VortiDex.Controllers
         [HttpPost]
         public IActionResult Create([FromBody] CreateSquadDto dto)
         {
-            var squad = _squadServ.Create(dto);
+            try
+            {
+                var squad = _squadServ.Create(dto);
 
-            return CreatedAtAction(nameof(ReadById), new { id = squad.Id }, squad);
+                return CreatedAtAction(nameof(ReadById), new { id = squad.Id }, squad);
+            }
+            catch (Exception exception)
+            {
+                return ControllerExceptionHandler.HandleException(exception);
+            }
         }
 
         [HttpPut("{id}")]
         public IActionResult Update(int id, [FromBody] UpdateSquadDto dto)
         {
-            var squad = _squadServ
-               .Update(id, dto);
+            try
+            {
+                var squad = _squadServ
+                   .Update(id, dto);
 
-            return Ok(squad);
+                return Ok(squad);
+            }
+            catch (Exception exception)
+            {
+                return ControllerExceptionHandler.HandleException(exception);
+            }
         }
 
         [HttpDelete("{id}")]

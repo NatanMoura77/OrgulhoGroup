@@ -52,9 +52,4 @@ public class TrainerRepository : ITrainerRepository
 
         return(trainer);
     }
-
-    public bool Exists(int id)
-    {
-        return _context.Trainers.Any(trainer => trainer.Id == id);
-    }
 }

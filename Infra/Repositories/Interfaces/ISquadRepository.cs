@@ -4,6 +4,7 @@ namespace VortiDex.Infra.Repositories.Interfaces;
 
 public interface ISquadRepository : IRepository<Squad>
 {
+    bool Exists(Squad squad);
     Squad AddPokemonToSquad(Squad squad, int pokemonId);
     Squad DeletePokemonFromSquad(Squad squad, int pokemonId);
 }

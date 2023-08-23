@@ -19,6 +19,8 @@ public class SkillServices : ISkillService
 
     public ReadSkillDtoWithRelations Create(CreateSkillDto createDto)
     {
+        createDto.Name = createDto.Name.ToUpper();
+
         var skill = _mapper
             .ToModel(createDto);
 
@@ -63,6 +65,8 @@ public class SkillServices : ISkillService
                 _mapper
                     .ToCreateDto(updateDto)
             );
+
+        skill.Name = skill.Name.ToUpper();
 
         skill = _mapper
             .ToExistentModel(updateDto, skill);

@@ -19,6 +19,8 @@ public class TrainerServices : ITrainerService
 
     public ReadTrainerDtoWithRelations Create(CreateTrainerDto createDto)
     {
+        createDto.Name = createDto.Name.ToUpper();
+
         var trainer = _mapper
             .ToModel(createDto);
 
@@ -64,6 +66,8 @@ public class TrainerServices : ITrainerService
                 _mapper
                     .ToCreateDto(updateDto)
             );
+
+        trainer.Name = trainer.Name.ToUpper();
 
         trainer = _mapper
             .ToExistentModel(updateDto, trainer);

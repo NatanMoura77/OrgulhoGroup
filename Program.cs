@@ -22,7 +22,7 @@ public class Program
         
         builder
             .Services.AddDbContext<PokeContext>(option => option
-            .UseSqlServer(connString));
+            .UseMySql(connString, ServerVersion.AutoDetect(connString)));
 
         builder
             .Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());

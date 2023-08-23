@@ -16,6 +16,9 @@ public class PokedexRepository : IPokedexRepository
 
     public Pokedex CreateRep(Pokedex pokedex)
     {
+        if (!_context.Trainers.Any(trainer => trainer.Id == pokedex.TrainerId))
+            throw new TrainerNotFoundException();
+
         _context.Pokedex.Add(pokedex);
         _context.SaveChanges();
 
@@ -37,6 +40,9 @@ public class PokedexRepository : IPokedexRepository
 
     public Pokedex UpdateRep(Pokedex pokedex)
     {
+        if (!_context.Trainers.Any(trainer => trainer.Id == pokedex.TrainerId))
+            throw new TrainerNotFoundException();
+
         _context.Pokedex.Update(pokedex);
         _context.SaveChanges();
 
@@ -49,11 +55,6 @@ public class PokedexRepository : IPokedexRepository
         _context.SaveChanges();
 
         return(pokedex);
-    }
-
-    public bool Exists(int id)
-    {
-        return _context.Pokedex.Any(pokedex => pokedex.Id == id);
     }
 
     public Pokedex AddPokemonToPokedex(Pokedex pokedex, int pokemonId)

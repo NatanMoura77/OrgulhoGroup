@@ -84,6 +84,11 @@ public class PokedexServices : IPokedexService
     {
         var pokedex = _pokedexRep.FindById(pokedexId) ?? throw new PokedexNotFoundException();
 
+        if(pokedex.Pokemons.Any(pokemon => pokemon.Id == pokemonId)) 
+        {
+            throw new BadHttpRequestException("Pokemon já adicionado na pokedex!");
+        }
+
         pokedex = _pokedexRep.AddPokemonToPokedex(pokedex, pokemonId);
 
         return _mapper.ToReadDtoWithRelations(pokedex);

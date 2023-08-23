@@ -1,4 +1,5 @@
-﻿using VortiDex.Dtos.Request.DtosPokeType;
+﻿using Microsoft.AspNetCore.Http.HttpResults;
+using VortiDex.Dtos.Request.DtosPokeType;
 using VortiDex.Dtos.Responses.DtosPokeType;
 using VortiDex.Exceptions.NotFoundExceptions;
 using VortiDex.Infra.Repositories.Interfaces;
@@ -19,6 +20,8 @@ public class PokeTypeServices : IPokeTypeService
 
     public ReadPokeTypeDtoWithRelations Create(CreatePokeTypeDto createDto)
     {
+        createDto.Name = createDto.Name.ToUpper();
+
         var pokeType = _mapper
             .ToModel(createDto);
 
@@ -55,19 +58,26 @@ public class PokeTypeServices : IPokeTypeService
 
     public ReadPokeTypeDtoWithRelations Update(int pokeTypeId, UpdatePokeTypeDto updateDto)
     {
-        var pokeType = _pokeTypeRep.FindById(pokeTypeId);
+        var pokeType = _pokeTypeRep
+            .FindById(pokeTypeId);
 
-        if (pokeType is null)
+        updateDto.Name = updateDto.Name.ToUpper();
+
+        if (pokeType == null)
         {
             return Create(_mapper.ToCreateDto(updateDto));
         }
-        else
-        {
-            pokeType = _mapper.ToExistentModel(updateDto, pokeType);
-            _pokeTypeRep.UpdateRep(pokeType);
 
-            return _mapper.ToReadDtoWithRelations(pokeType);
-        }
+        pokeType = 
+            _mapper.ToExistentModel(updateDto, pokeType);
+
+        _pokeTypeRep
+            .UpdateRep(pokeType);
+
+        var pokeTypeDto = _mapper
+            .ToReadDtoWithRelations(pokeType);
+
+        return pokeTypeDto;
     }
 
     public void Delete(int pokeTypeId)

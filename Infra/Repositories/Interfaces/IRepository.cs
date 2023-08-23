@@ -7,5 +7,4 @@ public interface IRepository<Type>
     ICollection<Type> GetAllRep();
     Type UpdateRep(Type data);
     Type DeleteRep(Type data);
-    bool Exists(int id);
 }

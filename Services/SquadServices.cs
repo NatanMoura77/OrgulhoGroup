@@ -1,5 +1,6 @@
 ﻿using VortiDex.Dtos.Request.DtosSquad;
 using VortiDex.Dtos.Responses.DtosSquad;
+using VortiDex.Exceptions.BadRequestExceptions;
 using VortiDex.Exceptions.NotFoundExceptions;
 using VortiDex.Infra.Repositories.Interfaces;
 using VortiDex.Mapper.Interfaces;
@@ -19,6 +20,8 @@ public class SquadServices : ISquadService
 
     public ReadSquadDtoWithRelations Create(CreateSquadDto createDto)
     {
+        createDto.Name = createDto.Name.ToUpper();
+
         var squad = _mapper
             .ToModel(createDto);
 
@@ -64,6 +67,8 @@ public class SquadServices : ISquadService
                     .ToCreateDto(updateDto)
             );
 
+        squad.Name = squad.Name.ToUpper();
+
         squad = _mapper
             .ToExistentModel(updateDto, squad);
 
@@ -104,6 +109,11 @@ public class SquadServices : ISquadService
     {
         var squad = _squadRep
             .FindById(squadId) ?? throw new SquadNotFoundException();
+
+        if(squad.Pokemons.Count > 6)
+        {
+            throw new BadRequestException("A equipe já está cheia!");
+        }
 
         squad = _squadRep
             .AddPokemonToSquad(squad, pokemonId);

@@ -16,5 +16,5 @@ public class UpdatePokemonDto
 
     public required string Picture { get; set; }
 
-    public required ICollection<int> PokeTypeId { get; set; }
+    public required ICollection<int> PokeTypesId { get; set; }
 }
